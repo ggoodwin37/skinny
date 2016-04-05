@@ -1,1 +1,9 @@
-console.log('app is running :D -.-');
+// var React = require('react');
+var ReactDOM = require('react-dom');
+
+ReactDOM.render(
+//        <h1>Kickin it</h1>Old school,
+//    document.getElementById('main');
+);
+
+console.log('lol2');
