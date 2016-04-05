@@ -2,6 +2,8 @@ var hapi = require('hapi');
 var config = require('getconfig');
 var inspect = require('eyes').inspector({maxLength: null});
 
+//var serverRoutes = require('./server-routes');
+
 function startServerInstance(done) {
 
     var app = {
@@ -25,14 +27,25 @@ function startServerInstance(done) {
     var plugins = [
         require('inert')
     ];
-    server.registerPlugins(plugins, function(err) {
+    server.register(plugins, function(err) {
         if (err) throw err;
 
+        // /s/* are client-side apps handled generically on the server
+        // (client router picks up route from url)
         server.route({
             method: 'GET',
             path: '/s/{name*}',
             handler: function (request, reply) {
                 return reply.file(__dirname + '/app.html');
+            }
+        });
+
+        // /dist/* are static asset files
+        server.route({
+            method: 'GET',
+            path: '/dist/{asset*}',
+            handler: function (request, reply) {
+                return reply.file(__dirname + '/dist/' + request.params.asset);
             }
         });
 

@@ -1,9 +1,13 @@
+'use strict';
+
 var gulp = require('gulp');
 var browserify = require('browserify');
+var reactify = require('reactify');
 var watchify = require('watchify');
+var source = require('vinyl-source-stream');
 var less = require('gulp-less');
 
-// see http://christianalfoni.github.io/javascript/2014/08/15/react-js-workflow.html
+// based on http://christianalfoni.github.io/javascript/2014/08/15/react-js-workflow.html
 
 gulp.task('browserify', function() {
     var bundler = browserify({
@@ -16,13 +20,11 @@ gulp.task('browserify', function() {
     });
     function doBundle(watcher) {
         // could do uglifying after source pipe
-        var updateStart = Date.now();
-        console.log('Updating bundle...');
+        console.log('Updating js bundle...');
         watcher
             .bundle()
             .pipe(source('app.js'))
             .pipe(gulp.dest('./dist'));
-        console.log('Done updatin\' bundle, took ' + (Date.now() - updateStart) + 'ms');
         return watcher;
     }
     var watcher = watchify(bundler)
@@ -32,14 +34,22 @@ gulp.task('browserify', function() {
     return doBundle(watcher);
 });
 
+// TODO: this is translating but not concating, need to do that if we have more than one src.
 gulp.task('less', function() {
-    gulp.watch('./less/**/*.less', function() {
-        return gulp.src('./less/**/*.less')
+    var lessFilePath = 'less/**/*.less';
+    var lessOutPath = './dist';
+    function doLess() {
+        console.log('Transforming less source...');
+        return gulp.src(lessFilePath)
             .pipe(less({
                 // paths: [path.join(__dirname, 'less', 'includes')]
             }))
-            .pipe(gulp.dest('./dist/css'))
+            .pipe(gulp.dest(lessOutPath));
+    }
+    gulp.watch(lessFilePath, function() {
+        return doLess();
     });
+    return doLess();
 });
 
 gulp.task('default', ['browserify', 'less']);
