@@ -11,5 +11,8 @@
     "url": "todo"
   },
   "author": "ggoodwin37",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  }
 }
