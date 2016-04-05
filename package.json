@@ -16,6 +16,7 @@
     "eyes": "^0.1.8",
     "getconfig": "^3.0.0",
     "gulp": "^3.9.1",
+    "gulp-less": "^3.0.5",
     "hapi": "^13.3.0",
     "moonboots_hapi": "^5.0.0"
   }
