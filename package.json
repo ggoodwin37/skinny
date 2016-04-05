@@ -21,6 +21,7 @@
   "devDependencies": {
     "browserify": "^13.0.0",
     "gulp": "^3.9.1",
+    "gulp-dest": "^0.2.3",
     "gulp-less": "^3.0.5",
     "react": "^0.14.8",
     "react-dom": "^0.14.8",

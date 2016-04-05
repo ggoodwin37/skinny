@@ -1,9 +1,9 @@
 // var React = require('react');
-var ReactDOM = require('react-dom');
+// var ReactDOM = require('react-dom');
 
-ReactDOM.render(
+//ReactDOM.render(
 //        <h1>Kickin it</h1>Old school,
 //    document.getElementById('main');
-);
+//);
 
-console.log('lol2');
+console.log('fuck dis 2');

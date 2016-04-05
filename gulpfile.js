@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
+var dest = require('gulp-dest');
 var browserify = require('browserify');
 var reactify = require('reactify');
 var watchify = require('watchify');
@@ -11,7 +12,7 @@ var less = require('gulp-less');
 
 gulp.task('browserify', function() {
     var bundler = browserify({
-        entries: ['./client/app.js'],
+        entries: ['./client/app.jsx'],
         transform: [reactify],  // or babelify?
         debug: true,
         cache: {},
@@ -23,7 +24,8 @@ gulp.task('browserify', function() {
         console.log('Updating js bundle...');
         watcher
             .bundle()
-            .pipe(source('app.js'))
+            .pipe(source('app.jsx'))
+            .pipe(dest({ext: 'js'}))
             .pipe(gulp.dest('./dist'));
         return watcher;
     }
