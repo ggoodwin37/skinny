@@ -19,9 +19,9 @@ function startServerInstance(done) {
 
 	server.route({
 		method: 'GET',
-		path: '/s/{name}',
+		path: '/',
 		handler: function (request, reply) {
-			reply('Hello, ' + encodeURIComponent(request.params.name) + '!');
+			reply('<a href="/s/test">test</a>');
 		}
 	});
 
