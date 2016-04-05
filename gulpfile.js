@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
+var concat = require('gulp-concat');
 var dest = require('gulp-dest');
 var browserify = require('browserify');
 var reactify = require('reactify');
@@ -36,7 +37,6 @@ gulp.task('browserify', function() {
     return doBundle(watcher);
 });
 
-// TODO: this is translating but not concating, need to do that if we have more than one src.
 gulp.task('less', function() {
     var lessFilePath = 'less/**/*.less';
     var lessOutPath = './dist';
@@ -46,6 +46,7 @@ gulp.task('less', function() {
             .pipe(less({
                 // paths: [path.join(__dirname, 'less', 'includes')]
             }))
+            .pipe(concat('app.css'))
             .pipe(gulp.dest(lessOutPath));
     }
     gulp.watch(lessFilePath, function() {
