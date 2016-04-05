@@ -2,8 +2,6 @@ var hapi = require('hapi');
 var config = require('getconfig');
 var inspect = require('eyes').inspector({maxLength: null});
 
-var getMoonbootsPlugin = require('./moonboots-plugin');
-
 function startServerInstance(done) {
 
 	var app = {
@@ -24,16 +22,17 @@ function startServerInstance(done) {
 			reply('<a href="/s/test">test</a>');
 		}
 	});
+	server.route({
+		method: 'GET',
+		path: '/s/{name*}',
+		handler: function (request, reply) {
+			// TODO: best way to return an html page with links here?
+			reply('<h1>Hi ' + encodeURIComponent(request.params.name) + ' :D</h1>');
+		}
+	});
 
-	var plugins = [
-		getMoonbootsPlugin(config)
-	];
-	server.register(plugins, function (err) {
-		if (err) throw err;
-		server.start(function () {
-			console.log('app is running at', server.info.uri);
-			done && done(server, app);
-		});
+	server.start(function () {
+		console.log('app is running at', server.info.uri);
 	});
 	return server;
 }
