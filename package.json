@@ -2,7 +2,7 @@
   "name": "skinny",
   "version": "1.0.0",
   "description": "web app",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "test"
   },
@@ -13,6 +13,10 @@
   "author": "ggoodwin37",
   "license": "ISC",
   "dependencies": {
-    "gulp": "^3.9.1"
+    "eyes": "^0.1.8",
+    "getconfig": "^3.0.0",
+    "gulp": "^3.9.1",
+    "hapi": "^13.3.0",
+    "moonboots_hapi": "^5.0.0"
   }
 }
