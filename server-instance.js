@@ -20,7 +20,7 @@ function startServerInstance(done) {
 
 	var plugins = [
 		getMoonbootsPlugin(config),
-		getRouter(app)
+//		getRouter(app)
 	];
 	server.register(plugins, function (err) {
 		if (err) throw err;
