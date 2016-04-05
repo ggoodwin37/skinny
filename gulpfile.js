@@ -1,14 +1,47 @@
-var gulp = require('gulp');
-var less = require('gulp-less');
-//var path = require('path');
+'use strict';
 
-// TODO: add a default task, add a watch task, figure out how to make this more automatic.
-//  see http://markgoodyear.com/2014/01/getting-started-with-gulp/
+// based on http://christianalfoni.github.io/javascript/2014/08/15/react-js-workflow.html
+
+var gulp = require('gulp');
+var concat = require('gulp-concat');
+var source = require('vinyl-source-stream');
+var dest = require('gulp-dest');
+var browserify = require('browserify');
+var babelify = require('babelify');
+var less = require('gulp-less');
+
+var outPath = './dist';
+
+gulp.task('browserify', function() {
+    function doBundle() {
+        console.log('Bundling js...');
+        browserify('./client/app.jsx')
+            .transform(babelify, {presets: ['es2015', 'react']})
+            .bundle()
+            .pipe(source('app.js'))
+            .pipe(dest({ext: 'js'}))
+            .pipe(gulp.dest(outPath));
+    }
+
+    var jsFilePath = 'client/*.js*';
+    gulp.watch(jsFilePath, doBundle);
+    doBundle();
+});
 
 gulp.task('less', function() {
-	gulp.src('./less/main.less')
-		.pipe(less({
-			//paths: [path.join(__dirname, 'less', 'includes')]
-		}))
-		.pipe(gulp.dest('./dist/css'));
+    var lessFilePath = 'less/**/*.less';
+    function doLess() {
+        console.log('Transforming less...');
+        return gulp.src(lessFilePath)
+            .pipe(less({
+                // paths: [path.join(__dirname, 'less', 'includes')]
+            }))
+            .pipe(concat('app.css'))
+            .pipe(gulp.dest(outPath));
+    }
+
+    gulp.watch(lessFilePath, doLess);
+    doLess();
 });
+
+gulp.task('default', ['browserify', 'less']);
