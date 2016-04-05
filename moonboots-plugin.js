@@ -2,7 +2,7 @@ function getMoonbootsPlugin(config) {
 	var moonbootsPlugin = {
 		register: require('moonboots_hapi'),
 		options: {
-			appPath: '/*',
+			appPath: '/s/{name*}',
 			moonboots: {
 				main: __dirname + '/client/app.js',
 				developmentMode: config.isDev,

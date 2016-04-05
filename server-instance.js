@@ -3,7 +3,6 @@ var config = require('getconfig');
 var inspect = require('eyes').inspector({maxLength: null});
 
 var getMoonbootsPlugin = require('./moonboots-plugin');
-var getRouter = require('./router');
 
 function startServerInstance(done) {
 
@@ -18,9 +17,16 @@ function startServerInstance(done) {
 		port: config.serverPort
 	});
 
+	server.route({
+		method: 'GET',
+		path: '/s/{name}',
+		handler: function (request, reply) {
+			reply('Hello, ' + encodeURIComponent(request.params.name) + '!');
+		}
+	});
+
 	var plugins = [
-		getMoonbootsPlugin(config),
-//		getRouter(app)
+		getMoonbootsPlugin(config)
 	];
 	server.register(plugins, function (err) {
 		if (err) throw err;
