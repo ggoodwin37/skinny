@@ -4,18 +4,30 @@ var browserHistory = require('react-router').browserHistory;
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var testComponent = require('./test-component.jsx');
-var test2Component = require('./test2-component.jsx');
 var noMatchComponent = require('./no-match-component.jsx');
 
+const routeMap = [
+    {name: 'test', component: require('./test-component.jsx') },
+    {name: 'test2', component: require('./test2-component.jsx') },
+    {name: 'pascal', component: require('./pascal-component.jsx') },
+];
+
+// using createElement instead of jsx here because we need to generate a dynamic list of children.
+// the trick is the .apply call which allows us to use the spread-arg flavor of createElement even
+// though we're building the child route list dynamically.
 function setupClientRoutes() {
-    ReactDOM.render((
-            <Router history={browserHistory}>
-                <Route path="/s/test" component={testComponent}></Route>
-                <Route path="/s/test2" component={test2Component}></Route>
-                <Route path="*" component={noMatchComponent}></Route>
-            </Router>
-    ), document.getElementById('main'));
+    var routes = routeMap.map(function(routeInfo) {
+        return React.createElement(Route, {
+            path: '/s/' + routeInfo.name,
+            component: routeInfo.component
+        });
+    });
+    routes.push(React.createElement(Route, {
+        path: '*',
+        component: noMatchComponent
+    }));
+    var routeEl = React.createElement.apply(null, [Router, {history: browserHistory}].concat(routes));
+    ReactDOM.render(routeEl, document.getElementById('main'));
 }
 
 module.exports = setupClientRoutes;

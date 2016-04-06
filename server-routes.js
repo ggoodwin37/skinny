@@ -1,7 +1,8 @@
 // all existing client-side routes listed here for convenience
 const sRoutes = [
     'test',
-    'test2'
+    'test2',
+    'pascal'
 ];
 
 function registerServerRoutes(server) {
@@ -9,7 +10,7 @@ function registerServerRoutes(server) {
         method: 'GET',
         path: '/',
         handler: function (request, reply) {
-            var responseHtml = '<ul>' + sRoutes.map(name => {
+            var responseHtml = '<h3>Available things:</h3><ul>' + sRoutes.map(name => {
                 return '<li><a href="/s/' + name + '">' + name + '</a></li>';
             }).join('') + '</ul>';
             reply(responseHtml);
