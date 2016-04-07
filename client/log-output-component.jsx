@@ -3,7 +3,19 @@ var classNames = require('classnames');
 
 var uuid = require('node-uuid');
 
+const maxMessages = 10;
+
 var LogOutputComponent = React.createClass({
+    logLine: function(str) {
+        var newMessages = this.state.logMessages.concat({message:str, id:uuid.v1()});
+
+        // make sure it doesn't get too long
+        if (newMessages.length > maxMessages) {
+            newMessages = newMessages.slice(newMessages.length - maxMessages);
+        }
+
+        this.setState({logMessages: newMessages});
+    },
     getInitialState: function() {
         return {
             logMessages: [
@@ -23,14 +35,6 @@ var LogOutputComponent = React.createClass({
                     {lineNodes}
                 </div>
         );
-    },
-    logLine: function(str) {
-        this.state.logMessages.push({message: str, id: uuid.v1()});
-
-        // make sure it doesn't get too long
-        if (this.state.logMessages.length > maxMessages) {
-            this.state.logMessages = this.state.logMessages.slice(this.state.logMessages.length - maxMessages);
-        }
     }
 });
 
