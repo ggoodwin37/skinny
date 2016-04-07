@@ -4,13 +4,9 @@ var browserHistory = require('react-router').browserHistory;
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+var routeMap = require('./client-route-map.jsx');
+var rootComponent = require('./root-component.jsx');
 var noMatchComponent = require('./no-match-component.jsx');
-
-const routeMap = [
-    {name: 'test', component: require('./test-component.jsx') },
-    {name: 'test2', component: require('./test2-component.jsx') },
-    {name: 'pascal', component: require('./pascal-component.jsx') },
-];
 
 // using createElement instead of jsx here because we need to generate a dynamic list of children.
 // the trick is the .apply call which allows us to use the spread-arg flavor of createElement even
@@ -22,6 +18,10 @@ function setupClientRoutes() {
             component: routeInfo.component
         });
     });
+    routes.push(React.createElement(Route, {
+        path: '/',
+        component: rootComponent
+    }));
     routes.push(React.createElement(Route, {
         path: '*',
         component: noMatchComponent

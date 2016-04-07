@@ -1,30 +1,19 @@
-// all existing client-side routes listed here for convenience
-const sRoutes = [
-    'test',
-    'test2',
-    'pascal'
-];
-
 function registerServerRoutes(server) {
-    server.route({
-        method: 'GET',
-        path: '/',
-        handler: function (request, reply) {
-            var responseHtml = '<h3>Available things:</h3><ul>' + sRoutes.map(name => {
-                return '<li><a href="/s/' + name + '">' + name + '</a></li>';
-            }).join('') + '</ul>';
-            reply(responseHtml);
-        }
-    });
+    function clientApp(request, reply) {
+        return reply.file(__dirname + '/app.html');
+    }
 
-    // /s/* are client-side apps handled generically on the server
+    // these are all client-side routes, handled generically on the server.
     // (client router picks up route from url)
     server.route({
         method: 'GET',
+        path: '/',
+        handler: clientApp
+    });
+    server.route({
+        method: 'GET',
         path: '/s/{name*}',
-        handler: function (request, reply) {
-            return reply.file(__dirname + '/app.html');
-        }
+        handler: clientApp
     });
 
     // /dist/* are static asset files

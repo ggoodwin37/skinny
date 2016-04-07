@@ -29,9 +29,11 @@ var pascalCache = generatePascalsTriangle();
 // note: apparently components need to be Capitalized? wtf.
 var PascalRowComponent = React.createClass({
     render: function() {
+        var valIdCtr = 0xff;
         var valNodes = this.props.values.map(function(oneValue) {
+            var keyStr = 'pascal-val-' + (valIdCtr++);  // TODO: am I doing this right? seems weird.
             return (
-                    <div className={classNames('pascal-val', {'odd-val': !!(oneValue % 2)})}>{oneValue}</div>
+                    <div className={classNames('pascal-val', {'odd-val': !!(oneValue % 2)})} key={keyStr}>{oneValue}</div>
             );
         });
         return (
