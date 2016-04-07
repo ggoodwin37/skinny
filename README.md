@@ -18,3 +18,8 @@ Client sandbox web app. Gulp build, lightweight server with Hapi, client uses Re
 - [ ] brush up on xss, csrf, others? clickjacking?
 - [ ] mary's qs
 - [ ] minesweeper
+- [ ] Reading
+  - [ ] http://research.google.com/pubs/DistributedSystemsandParallelComputing.html
+  - [ ] https://projecteuler.net/archives
+  - [ ] http://www.aosabook.org/en/distsys.html
+  
