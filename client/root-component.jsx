@@ -1,6 +1,7 @@
 var React = require('react');
 var Link = require('react-router').Link;
 var classNames = require('classnames');
+var uuid = require('node-uuid');
 
 var routeMap = require('./client-route-map.jsx');
 
@@ -9,9 +10,8 @@ var RootComponent = React.createClass({
         var title = 'Skinny web app.';
         var linkNodes = routeMap.map(function(routeInfo, i) {
             var routeStr = '/s/' + routeInfo.name;
-            var linkKey = 'root-component-link-key-' + i;
             return (
-                <li key={linkKey}>
+                <li key={uuid.v1()}>
                     <Link to={routeStr}>{routeStr}</Link>
                 </li>
             )

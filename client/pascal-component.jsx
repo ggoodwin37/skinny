@@ -1,6 +1,8 @@
 var React = require('react');
 var classNames = require('classnames');
 
+var uuid = require('node-uuid');
+
 // calculate this many rows
 const maxRows = 24;
 
@@ -29,11 +31,9 @@ var pascalCache = generatePascalsTriangle();
 // note: apparently components need to be Capitalized? wtf.
 var PascalRowComponent = React.createClass({
     render: function() {
-        var valIdCtr = 0xff;
         var valNodes = this.props.values.map(function(oneValue) {
-            var keyStr = 'pascal-val-' + (valIdCtr++);  // TODO: am I doing this right? seems weird.
             return (
-                    <div className={classNames('pascal-val', {'odd-val': !!(oneValue % 2)})} key={keyStr}>{oneValue}</div>
+                    <div className={classNames('pascal-val', {'odd-val': !!(oneValue % 2)})} key={uuid.v1()}>{oneValue}</div>
             );
         });
         return (
@@ -49,9 +49,8 @@ var PascalComponent = React.createClass({
         var title = 'This is the Pascal\'s triangle component.';
         var descr = 'Show Pascal\'s triangle, using flexbox, and highlight odd numbers to look for patterns.';
         var rowNodes = pascalCache.map(function(oneRow, i) {
-            var rowKey = 'row-key-' + i;
             return (
-                    <PascalRowComponent values={oneRow} key={rowKey} />
+                    <PascalRowComponent values={oneRow} key={uuid.v1()} />
             );
         });
         return (
