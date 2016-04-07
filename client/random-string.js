@@ -1,4 +1,4 @@
-const charSetAll = 'abcdefghijklmnopqrstuvwxyz'.split('');
+const charSet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
 function randomString(targetLength) {
     targetLength = targetLength || 4;

@@ -3,7 +3,7 @@ var classNames = require('classnames');
 
 var uuid = require('node-uuid');
 
-const maxMessages = 10;
+const maxMessages = 50;
 
 var LogOutputComponent = React.createClass({
     logLine: function(str) {
@@ -18,10 +18,9 @@ var LogOutputComponent = React.createClass({
     },
     getInitialState: function() {
         return {
-            logMessages: [
-                { message: 'a test message', id: uuid.v1() },
-                { message: 'also a test', id: uuid.v1() }
-            ]
+            logMessages: this.props.initialMessages.map((oneMessage) => {
+                return { message: oneMessage, id: uuid.v1() };
+            })
         };
     },
     render: function() {
@@ -31,10 +30,13 @@ var LogOutputComponent = React.createClass({
             );
         });
         return (
-                <div className={classNames('log-output-component')}>
+                <div className={classNames('log-output-component')} ref={(el) => { el && this.checkScroll(el); } }>
                     {lineNodes}
                 </div>
         );
+    },
+    checkScroll: function(el) {
+        el.scrollTop = el.scrollHeight;
     }
 });
 
