@@ -2,7 +2,7 @@ var React = require('react');
 var classNames = require('classnames');
 
 // calculate this many rows
-const maxRows = 12;
+const maxRows = 24;
 
 // return value is an array of rows of the triangle. Row 0 corresponds to the first row of the triangle ([1]) etc.
 function generatePascalsTriangle() {
@@ -31,7 +31,7 @@ var PascalRowComponent = React.createClass({
     render: function() {
         var valNodes = this.props.values.map(function(oneValue) {
             return (
-                    <div className="pascal-val">{oneValue}</div>
+                    <div className={classNames('pascal-val', {'odd-val': !!(oneValue % 2)})}>{oneValue}</div>
             );
         });
         return (

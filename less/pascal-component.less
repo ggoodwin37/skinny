@@ -1,2 +1,17 @@
 .pascal-component {
+    .pascal-row {
+        display: flex;
+        flex-flow: row nowrap;
+    }
+    .pascal-val {
+        flex: 1;
+        margin: 2px;
+        padding: 2px;
+        border: 1px solid;
+        border-radius: 2px;
+        &.odd-val {
+            background-color: #dfd;
+            color: #222;
+        }
+    }
 }
