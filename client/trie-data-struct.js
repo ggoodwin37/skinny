@@ -1,11 +1,14 @@
 'use strict';
 
-function trieNode(val) {
+function trieNode(val, isTerminator) {
     this.val = val;
+    this.isTerminator = isTerminator || false;
     this.children = {};
 }
 trieNode.prototype.insert = function(str, offs) {
     if (offs === str.length) {
+        // mark that a word ended at this node.
+        this.isTerminator = true;
         return;
     }
 
@@ -35,12 +38,13 @@ trieDataStruct.prototype.insertWord = function(word) {
 trieDataStruct.prototype.toString = function() {
     var words = [], stack = [];
     function recurse(node) {
-        var childKeys = Object.keys(node.children).sort();
-        // if we have no further children, the current word is complete.
-        if (childKeys.length === 0) {
+        // if this node marked the end of the word, store the current word.
+        // we need to continue recursing even if this was a word stop.
+        if (node.isTerminator) {
             words.push(stack.join(''));
-            return;
         }
+
+        var childKeys = Object.keys(node.children).sort();
         childKeys.forEach(function(childKey) {
             var childNode = node.children[childKey];
             console.assert(childNode.val === childKey);  // TODO: can probably just get rid of .val
