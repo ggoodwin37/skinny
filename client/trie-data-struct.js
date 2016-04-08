@@ -1,8 +1,7 @@
 'use strict';
 
-function trieNode(val, isTerminator) {
-    this.val = val;
-    this.isTerminator = isTerminator || false;
+function trieNode() {
+    this.isTerminator = false;
     this.children = {};
 }
 trieNode.prototype.insert = function(str, offs) {
@@ -14,13 +13,13 @@ trieNode.prototype.insert = function(str, offs) {
 
     const theChar = str[offs];
     if (!this.children[theChar]) {
-        this.children[theChar] = new trieNode(theChar);
+        this.children[theChar] = new trieNode();
     }
     this.children[theChar].insert(str, offs + 1);
 }
 
 function trieDataStruct() {
-    this.root = new trieNode(null);
+    this.root = new trieNode();
 }
 trieDataStruct.prototype.insert = function(toInsert) {
     if (typeof toInsert === 'string') {
@@ -47,8 +46,7 @@ trieDataStruct.prototype.toString = function() {
         var childKeys = Object.keys(node.children).sort();
         childKeys.forEach(function(childKey) {
             var childNode = node.children[childKey];
-            console.assert(childNode.val === childKey);  // TODO: can probably just get rid of .val
-            stack.push(childNode.val);
+            stack.push(childKey);
             recurse(childNode);
             stack.pop();
         });
