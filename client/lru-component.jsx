@@ -9,8 +9,19 @@ var lruCache = require('./lru-cache');
 var LruComponent = React.createClass({
     testLru: function() {
         var msgs = [];
-        msgs.push('fuck you');
-        // TODO
+        var lru = new lruCache(3);
+        msgs.push('fresh cache (maxSize=3): ' + lru.toString());
+        lru.set('a', 'alphabet');
+        lru.set('b', 'billiards');
+        msgs.push('set two: ' + lru.toString());
+        lru.set('c', 'colada');
+        msgs.push('one more, full now: ' + lru.toString());
+        lru.set('d', 'derby');
+        msgs.push('added one more, dropped oldest: ' + lru.toString());
+        var foo = lru.get('b');
+        msgs.push('freshened b: ' + lru.toString());
+        lru.set('e', 'earnest');
+        msgs.push('another new one: ' + lru.toString());
         return msgs;
     },
     render: function() {

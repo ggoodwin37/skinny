@@ -16,11 +16,13 @@ lruList.prototype.add = function(key, val) {
     if (this.tail === null) {
         this.head = this.tail = newNode;
     } else {
-        this.tail.next = newNode;
         newNode.prev = this.tail;
+        newNode.next = null;
+        this.tail.next = newNode;
         this.tail = newNode;
     }
     this.count++;
+    return newNode;
 }
 lruList.prototype.freshen = function(node) {
     if (this.head === node) {
@@ -37,9 +39,10 @@ lruList.prototype.freshen = function(node) {
     }
     node.prev = null;
     node.next = this.head;
+    node.next.prev = node;
     this.head = node;
 }
-lruList.prototype.count = function() {
+lruList.prototype.getCount = function() {
     return this.count;
 }
 lruList.prototype.dropBack = function() {
@@ -64,24 +67,24 @@ function lruCache(maxItems) {
     this.list = new lruList();
 }
 lruCache.prototype.set = function(key, val) {
-    if (this.table[key]) {
-        this.table[key].val = val;
+    if (this.nodeCache[key]) {
+        this.nodeCache[key].val = val;
     } else {
-        var newNode = this.list.add(val);
-        this.table[key] = newNode;
+        var newNode = this.list.add(key, val);
+        this.nodeCache[key] = newNode;
     }
     this.freshen(key);
     this.checkSize();
 }
 lruCache.prototype.get = function(key) {
-    var val = this.table[key];
+    var val = this.nodeCache[key];
     if (val !== undefined) {
         this.freshen(key);
     }
     return val;
 }
 lruCache.prototype.freshen = function(key) {
-    var node = this.table[key];
+    var node = this.nodeCache[key];
     if (!node) {
         return;
     }
@@ -89,10 +92,23 @@ lruCache.prototype.freshen = function(key) {
 }
 lruCache.prototype.checkSize = function() {
     var droppedNode;
-    while (this.list.count() > this.maxItems) {
+    while (this.list.getCount() > this.maxItems) {
         droppedNode = this.list.dropBack();
-        delete this.table[droppedNode.key];
+        delete this.nodeCache[droppedNode.key];
     }
+}
+lruCache.prototype.toString = function() {
+    var listEls = [];
+    var node = this.list.head;
+    while (node != null) {
+        listEls.push(node.val);
+        node = node.next;
+    }
+    var self = this;
+    var nodeCacheEls = Object.keys(this.nodeCache).map(function(oneKey) {
+        return self.nodeCache[oneKey].val;
+    });
+    return listEls.join(',');
 }
 
 module.exports = lruCache;
