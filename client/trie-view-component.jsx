@@ -8,7 +8,6 @@ var TrieNodeView = React.createClass({
             var childNode = this.props.node.children[childKey];
             var highlight = null;
             if (this.props.highlight) {
-                console.log('node view highlight exists', this.props.highlight);
                 if (childKey === this.props.highlight.str[this.props.highlight.offs]) {
                     highlight = {
                         str: this.props.highlight.str,
