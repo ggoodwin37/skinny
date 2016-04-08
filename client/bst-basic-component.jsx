@@ -27,11 +27,11 @@ var BstBasicComponent = React.createClass({
         return msgs;
     },
     render: function() {
-        var title = 'Basic binary-sort-tree shit.';
+        var title = 'Basic binary-sort-tree.';
         var descr = 'BST insert and in-order traversal.';
         var initialLogMessages = this.testBst();
         return (
-                <div className={classNames('s-component', 'bst-component')}>
+                <div className={classNames('s-component')}>
                     <h1 className="title">{title}</h1>
                     <div className="description">{descr}</div>
                     <LogOutput initialMessages={initialLogMessages} ref={(loggerRef) => { this.logger = loggerRef }} />
