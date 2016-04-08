@@ -3,6 +3,8 @@ var classNames = require('classnames');
 
 var uuid = require('node-uuid');
 
+var BackLinkComponent = require('./back-link-component.jsx');
+
 // calculate this many rows
 const maxRows = 24;
 
@@ -60,6 +62,7 @@ var PascalComponent = React.createClass({
                     <div className="results">
                         {rowNodes}
                     </div>
+                    <BackLinkComponent />
                 </div>
         );
     }
