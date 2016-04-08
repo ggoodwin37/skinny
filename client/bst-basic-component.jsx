@@ -1,6 +1,7 @@
 var React = require('react');
 var classNames = require('classnames');
 
+var BackLinkComponent = require('./back-link-component.jsx');
 var LogOutput = require('./log-output-component.jsx');
 var randomString = require('./random-string');
 
@@ -35,6 +36,7 @@ var BstBasicComponent = React.createClass({
                     <h1 className="title">{title}</h1>
                     <div className="description">{descr}</div>
                     <LogOutput initialMessages={initialLogMessages} ref={(loggerRef) => { this.logger = loggerRef }} />
+                    <BackLinkComponent />
                 </div>
         );
     }

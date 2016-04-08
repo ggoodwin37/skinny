@@ -1,5 +1,6 @@
 var React = require('react');
 var classNames = require('classnames');
+var BackLinkComponent = require('./back-link-component.jsx');
 
 var AnimProgComponent = React.createClass({
     getInitialState: function() {
@@ -19,6 +20,7 @@ var AnimProgComponent = React.createClass({
                         <div className="prog-bar-inner">
                         </div>
                     </div>
+                    <BackLinkComponent />
                 </div>
         );
     },
