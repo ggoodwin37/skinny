@@ -15,9 +15,13 @@ var TrieNodeView = React.createClass({
                     };
                 }
             }
-            var childClassNames = classNames('trie-view-node-group',
-                                             {highlight: !!highlight,
-                                              term: childNode.isTerminator});
+            var childClassNames = classNames(
+                'trie-view-node-group',
+                {
+                    highlight: !!highlight,
+                    term: childNode.isTerminator
+                }
+            );
             return (
                     <li className={childClassNames} key={childNode.id}>
                         <div className={classNames('trie-view-node-label')}>
