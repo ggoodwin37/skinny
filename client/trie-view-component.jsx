@@ -8,7 +8,10 @@ var TrieNodeView = React.createClass({
         var childEls = childKeys.map(function(childKey) {
             var childNode = this.props.node.children[childKey];
             return (
-                    <li className={classNames('trie-view-node-label')} key={childNode.id}>{childKey}
+                    <li className={classNames('trie-view-node-group')} key={childNode.id}>
+                        <div className={classNames('trie-view-node-label')}>
+                            {childKey.toUpperCase()}
+                        </div>
                         <TrieNodeView node={childNode} />
                     </li>
             );
