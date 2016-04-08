@@ -1,8 +1,11 @@
 'use strict';
 
+var uuid = require('node-uuid');
+
 function trieNode() {
     this.isTerminator = false;
     this.children = {};
+    this.id = uuid.v1();
 }
 trieNode.prototype.insert = function(str, offs) {
     if (offs === str.length) {
