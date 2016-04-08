@@ -1,0 +1,28 @@
+.anim-prog-component {
+    @bar-height: 56px;
+    @bar-full-color: #4e4;
+    @bar-empty-color: #088;
+
+    .prog-bar {
+        margin: 32px auto;
+        width: 90%;
+        height: @bar-height;
+        border: 4px solid black;
+        border-radius: 8px;
+        background-color: @bar-empty-color;
+        overflow: hidden;
+        
+        .prog-bar-inner {
+            width: 0%;
+            height: @bar-height;
+            margin: 0;
+            padding: 0;
+            background-color: @bar-full-color;
+            -webkit-transition: width 1s linear;
+            transition: width 1s linear;
+        }
+        &.complete .prog-bar-inner {
+            width: 100%;
+        }
+    }
+}
