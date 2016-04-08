@@ -13,11 +13,16 @@
         overflow: hidden;
         
         .prog-bar-inner {
-            width: 33%;
+            width: 0%;
             height: @bar-height;
             margin: 0;
             padding: 0;
             background-color: @bar-full-color;
+            -webkit-transition: width 1s linear;
+            transition: width 1s linear;
+        }
+        &.complete .prog-bar-inner {
+            width: 100%;
         }
     }
 }
