@@ -3,6 +3,9 @@
     background-color: #222;
     border-radius: 4px;
     padding: 0 0 0 16px;
+    .trie-view-node-group {
+        border-left: 1px dashed #444;
+    }
 
     .trie-view-node-label {
         padding: 1px;
@@ -12,5 +15,11 @@
         width: 30px;
         border: 1px white solid;
         border-radius: 2px;
+    }
+    .highlight > .trie-view-node-label {
+        border: 2px #ff0 solid;
+    }
+    .term > .trie-view-node-label {
+        background-color: #822;
     }
 }
