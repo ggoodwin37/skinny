@@ -1,9 +1,7 @@
 var React = require('react');
 var classNames = require('classnames');
 
-// temp
 var LogOutput = require('./log-output-component.jsx');
-
 var TrieView = require('./trie-view-component.jsx');
 var BackLinkComponent = require('./back-link-component.jsx');
 
