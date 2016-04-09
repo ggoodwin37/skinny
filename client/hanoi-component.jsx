@@ -2,11 +2,15 @@ var React = require('react');
 var classNames = require('classnames');
 var BackLinkComponent = require('./back-link-component.jsx');
 
+var hanoiDataStruct = require('./hanoi-data-struct');
+
 var HanoiView = React.createClass({
     render: function() {
         return (
                 <h1>TODO: HanoiView</h1>
         );
+    },
+    componentDidMount: function() {
     }
 });
 
