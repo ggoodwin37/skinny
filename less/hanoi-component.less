@@ -1,6 +1,58 @@
-.hanoi-view {
-    .hanoi-stack {
-        .hanoi-piece {
+.hanoi-component {
+    .hanoi-view {
+        padding: 12px;
+        background-color: #000;
+        border-radius: 6px;
+        .hanoi-stack {
+            height: 48px;
+
+            .hanoi-piece {
+                margin: 8px 4px 8px 0px;
+                padding: 4px 32px;
+                border: 1px solid white;
+                border-radius: 3px;
+                font-size: 32px;
+                @piece-base-fg: #000;
+                @piece-base-bg: #fff;
+                &.hanoi-piece-1 {
+                    @factor: 90%;
+                    color: lighten(@piece-base-fg, @factor);
+                    background-color: darken(@piece-base-bg, @factor);
+                }
+                &.hanoi-piece-2 {
+                    @factor: 80%;
+                    color: lighten(@piece-base-fg, @factor);
+                    background-color: darken(@piece-base-bg, @factor);
+                }
+                &.hanoi-piece-3 {
+                    @factor: 70%;
+                    color: lighten(@piece-base-fg, @factor);
+                    background-color: darken(@piece-base-bg, @factor);
+                }
+                &.hanoi-piece-4 {
+                    @fg-factor: 70%;
+                    @bg-factor: 60%;
+                    color: lighten(@piece-base-fg, @fg-factor);
+                    background-color: darken(@piece-base-bg, @bg-factor);
+                }
+                &.hanoi-piece-5 {
+                    @fg-factor: 30%;
+                    @bg-factor: 50%;
+                    color: lighten(@piece-base-fg, @fg-factor);
+                    background-color: darken(@piece-base-bg, @bg-factor);
+                }
+                &.hanoi-piece-6 {
+                    @fg-factor: 30%;
+                    @bg-factor: 40%;
+                    color: lighten(@piece-base-fg, @fg-factor);
+                    background-color: darken(@piece-base-bg, @bg-factor);
+                }
+                &.hanoi-piece-7 {
+                    @factor: 30%;
+                    color: lighten(@piece-base-fg, @factor);
+                    background-color: darken(@piece-base-bg, @factor);
+                }
+            }
         }
     }
 }
