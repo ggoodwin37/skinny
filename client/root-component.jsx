@@ -3,7 +3,7 @@ var Link = require('react-router').Link;
 var classNames = require('classnames');
 var uuid = require('node-uuid');
 
-var routeMap = require('./client-route-map.jsx');
+var routeMap = require('./client-route-map');
 
 var RootComponent = React.createClass({
     render: function() {
