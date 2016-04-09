@@ -4,7 +4,7 @@ var browserHistory = require('react-router').browserHistory;
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var routeMap = require('./client-route-map.jsx');
+var routeMap = require('./client-route-map');
 var rootComponent = require('./root-component.jsx');
 var noMatchComponent = require('./no-match-component.jsx');
 

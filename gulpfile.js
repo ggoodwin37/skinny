@@ -15,7 +15,7 @@ var outPath = './dist';
 gulp.task('browserify', function() {
     function doBundle() {
         console.log('Bundling js...');
-        browserify('./client/app.jsx')
+        browserify('./client/app.js')
             .transform(babelify, {presets: ['es2015', 'react']})
             .bundle()
             .pipe(source('app.js'))

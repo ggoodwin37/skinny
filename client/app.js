@@ -1,2 +1,2 @@
-var setupClientRoutes = require('./client-routes.jsx');
+var setupClientRoutes = require('./client-routes');
 window.addEventListener('DOMContentLoaded', setupClientRoutes, false);
