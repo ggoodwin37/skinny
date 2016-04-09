@@ -43,7 +43,7 @@ var HanoiComponent = React.createClass({
         var title = 'Tower of Hanoi.';
         var descr = 'CS101 style.';
         if (!this.hanoi) {
-            this.hanoi = new hanoiDataStruct();
+            this.hanoi = new hanoiDataStruct(4);
         }
         return (
                 <div className={classNames('s-component', 'hanoi-component')}>
