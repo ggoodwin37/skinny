@@ -23,8 +23,8 @@ var HanoiStackView = React.createClass({
 
 var HanoiView = React.createClass({
     render: function() {
-        const hanoi = this.props.hanoi;
-        var stackNodes = hanoi.stacks.map(function(stack, i) {
+        const stacks = this.props.stacks;
+        var stackNodes = stacks.map(function(stack, i) {
             var key = 'hanoi-stack-' + i;
             return (
                     <HanoiStackView stack={stack} key={key} />
@@ -39,26 +39,39 @@ var HanoiView = React.createClass({
 });
 
 var HanoiComponent = React.createClass({
+    getInitialState: function() {
+        this.hanoi = new hanoiDataStruct(7);
+        return {
+            stacks: this.hanoi.stacks
+        };
+    },
     render: function() {
         var title = 'Tower of Hanoi.';
         var descr = 'CS101 style.';
-        if (!this.hanoi) {
-            this.hanoi = new hanoiDataStruct(4);
-        }
         return (
                 <div className={classNames('s-component', 'hanoi-component')}>
                     <h1 className="title">{title}</h1>
                     <div className="description">{descr}</div>
-                    <HanoiView hanoi={this.hanoi} />
+                    <HanoiView stacks={this.state.stacks} />
                     <BackLinkComponent />
                 </div>
         );
     },
     componentDidMount: function() {
-        // TODO: step hanoi here
-        // setTimeout(function() {
-        //     this.setState({isComplete: true});
-        // }.bind(this), 750);
+        const stepDelayMs = 150;
+        var solveStates = this.hanoi.getSolveStates(), iState = 0;
+        if (solveStates.length === 0) {
+            return;
+        }
+        var intervalId = window.setInterval(function() {
+            const thisState = solveStates[iState++];
+            this.setState({
+                stacks: thisState
+            });
+            if (iState === solveStates.length) {
+                window.clearInterval(intervalId);
+            }
+        }.bind(this), stepDelayMs);
     }
 });
 
