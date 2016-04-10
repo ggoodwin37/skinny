@@ -4,11 +4,16 @@ var classNames = require('classnames');
 var BackLinkComponent = require('./back-link-component.jsx');
 var LogOutput = require('./log-output-component.jsx');
 
+var randomArray = require('./random-array');
 var heapDataStruct = require('./heap-data-struct');
 
 var HeapComponent = React.createClass({
     testHeap: function() {
-        var msgs = ['TODO'];
+        var heap = new heapDataStruct(randomArray(20));
+        var msgs = [];
+        msgs.push('Heap before sort: ' + heap.toString());
+        heap.sortInPlace();
+        msgs.push('Heap after sort: ' + heap.toString());
         return msgs;
     },
     render: function() {
