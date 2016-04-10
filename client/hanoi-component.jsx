@@ -40,7 +40,7 @@ var HanoiView = React.createClass({
 
 var HanoiComponent = React.createClass({
     getInitialState: function() {
-        this.hanoi = new hanoiDataStruct(7);
+        this.hanoi = new hanoiDataStruct(10);
         return {
             stacks: this.hanoi.stacks
         };
