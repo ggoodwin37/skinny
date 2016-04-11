@@ -37,7 +37,9 @@ heapDataStruct.prototype.siftDown = function(index, lengthToConsider) {
     }
     var leftChildIndex = (2 * index) + 1;
     var rightChildIndex = leftChildIndex + 1;
-    const thisData = this.data[index], leftData = this.data[leftChildIndex], rightData = this.data[rightChildIndex];
+    const thisData = this.data[index],
+          leftData = this.data[leftChildIndex],
+          rightData = this.data[rightChildIndex];
     if (leftChildIndex >= lengthToConsider) {
         // special case: both children are past end of considerable list,
         // so we've sifted down as far as we can.
@@ -56,13 +58,13 @@ heapDataStruct.prototype.siftDown = function(index, lengthToConsider) {
     // normal case: both children are within list bounds
     // if only one is greater than this, swap with it.
     // if both are greater than this, swap with the greater of the two.
-    if (thisData < leftData && thisData > rightData) {
+    if (thisData < leftData && thisData >= rightData) {
         this.swap(index, leftChildIndex);
         this.siftDown(leftChildIndex, lengthToConsider);
-    } else if (thisData < rightData && thisData > leftData) {
+    } else if (thisData < rightData && thisData >= leftData) {
         this.swap(index, rightChildIndex);
         this.siftDown(rightChildIndex, lengthToConsider);
-    } else if (thisData < leftData && thisData < rightData) {
+    } else if (thisData <= leftData && thisData <= rightData) {
         if (leftData > rightData) {
             this.swap(index, leftChildIndex);
             this.siftDown(leftChildIndex, lengthToConsider);

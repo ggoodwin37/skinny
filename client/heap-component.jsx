@@ -9,11 +9,7 @@ var heapDataStruct = require('./heap-data-struct');
 
 var HeapComponent = React.createClass({
     testHeap: function() {
-        // TODO: figure out why some datasets are almost-but-not-quite correctly sorted.
-        //  I captured this known bad one that repros the problem
-        const knownProblemData = [993, 377, 804, 350, 363, 567, 204, 213, 204];
-        var heap = new heapDataStruct(knownProblemData);
-        // var heap = new heapDataStruct(randomArray(300));
+        var heap = new heapDataStruct(randomArray(300));
         var msgs = [];
         msgs.push('Heap before sort: ' + heap.toString());
         heap.sortInPlace();
