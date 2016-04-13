@@ -38,6 +38,8 @@ var HanoiView = React.createClass({
     }
 });
 
+const componentTitle = 'Tower of Hanoi.';
+const componentDescription = 'CS101 style.';
 var HanoiComponent = React.createClass({
     getInitialState: function() {
         this.hanoi = new hanoiDataStruct(10);
@@ -46,12 +48,10 @@ var HanoiComponent = React.createClass({
         };
     },
     render: function() {
-        var title = 'Tower of Hanoi.';
-        var descr = 'CS101 style.';
         return (
                 <div className={classNames('s-component', 'hanoi-component')}>
-                    <h1 className="title">{title}</h1>
-                    <div className="description">{descr}</div>
+                    <h1 className="title">{componentTitle}</h1>
+                    <div className="description">{componentDescription}</div>
                     <HanoiView stacks={this.state.stacks} />
                     <BackLinkComponent />
                 </div>
@@ -75,4 +75,9 @@ var HanoiComponent = React.createClass({
     }
 });
 
-module.exports = HanoiComponent;
+module.exports = {
+    component: HanoiComponent,
+    key: 'hanoi',
+    title: componentTitle,
+    descr: componentDescription
+};
