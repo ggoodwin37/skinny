@@ -7,6 +7,9 @@ var randomString = require('./random-string');
 
 var binSortTree = require('./bin-tree').binSortTree;
 
+const componentTitle = 'Basic binary-sort-tree.';
+const componentDescription = 'BST insert and in-order traversal.';
+
 var BstBasicComponent = React.createClass({
     testBst: function() {
         const numEntries = 17;
@@ -28,13 +31,11 @@ var BstBasicComponent = React.createClass({
         return msgs;
     },
     render: function() {
-        var title = 'Basic binary-sort-tree.';
-        var descr = 'BST insert and in-order traversal.';
         var initialLogMessages = this.testBst();
         return (
                 <div className={classNames('s-component')}>
-                    <h1 className="title">{title}</h1>
-                    <div className="description">{descr}</div>
+                    <h1 className="title">{componentTitle}</h1>
+                    <div className="description">{componentDescription}</div>
                     <LogOutput initialMessages={initialLogMessages} ref={(loggerRef) => { this.logger = loggerRef }} />
                     <BackLinkComponent />
                 </div>
@@ -42,4 +43,9 @@ var BstBasicComponent = React.createClass({
     }
 });
 
-module.exports = BstBasicComponent;
+module.exports = {
+    component: BstBasicComponent,
+    key: 'bst-basic',
+    title: componentTitle,
+    descr: componentDescription
+};

@@ -2,6 +2,8 @@ var React = require('react');
 var classNames = require('classnames');
 var BackLinkComponent = require('./back-link-component.jsx');
 
+const componentTitle = 'Animating progress bar.';
+const componentDescription = 'From 0% to 100% with no js (other than this description) (and that explanation).';
 var AnimProgComponent = React.createClass({
     getInitialState: function() {
         return {
@@ -9,13 +11,11 @@ var AnimProgComponent = React.createClass({
         };
     },
     render: function() {
-        var title = 'Animating progress bar.';
-        var descr = 'From 0% to 100% with no js (other than this description) (and that explanation).';
         var isComplete = this.state.isComplete;
         return (
                 <div className={classNames('s-component', 'anim-prog-component')}>
-                    <h1 className="title">{title}</h1>
-                    <div className="description">{descr}</div>
+                    <h1 className="title">{componentTitle}</h1>
+                    <div className="description">{componentDescription}</div>
                     <div className={classNames('prog-bar', {'complete': isComplete})}>
                         <div className="prog-bar-inner">
                         </div>
@@ -31,4 +31,9 @@ var AnimProgComponent = React.createClass({
     }
 });
 
-module.exports = AnimProgComponent;
+module.exports = {
+    component: AnimProgComponent,
+    key: 'anim-prog',
+    title: componentTitle,
+    descr: componentDescription
+};

@@ -7,6 +7,8 @@ var randomString = require('./random-string');
 
 var lruCache = require('./lru-cache');
 
+const componentTitle = 'LRU cache.';
+const componentDescription = 'O(1) for get and set.';
 var LruComponent = React.createClass({
     testLru: function() {
         var msgs = [];
@@ -26,13 +28,11 @@ var LruComponent = React.createClass({
         return msgs;
     },
     render: function() {
-        var title = 'LRU cache.';
-        var descr = 'O(1) for get and set.';
         var initialLogMessages = this.testLru();
         return (
                 <div className={classNames('s-component')}>
-                    <h1 className="title">{title}</h1>
-                    <div className="description">{descr}</div>
+                    <h1 className="title">{componentTitle}</h1>
+                    <div className="description">{componentDescription}</div>
                     <LogOutput initialMessages={initialLogMessages} ref={(loggerRef) => { this.logger = loggerRef }} />
                     <BackLinkComponent />
                 </div>
@@ -40,4 +40,9 @@ var LruComponent = React.createClass({
     }
 });
 
-module.exports = LruComponent;
+module.exports = {
+    component: LruComponent,
+    key: 'lru-basic',
+    title: componentTitle,
+    descr: componentDescription
+};

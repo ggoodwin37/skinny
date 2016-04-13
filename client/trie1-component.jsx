@@ -33,6 +33,8 @@ var words = [
     'zilch'
 ];
 
+const componentTitle = 'Trie.';
+const componentDescription = 'Prefix tree. Red boxes are word terminations.';
 var Trie1Component = React.createClass({
     testTrie: function() {
         var testTrie = new trieDataStruct();
@@ -43,13 +45,11 @@ var Trie1Component = React.createClass({
     render: function() {
         var highlightWord = 'extreme';
         var testTrie = this.testTrie();
-        var title = 'Trie.';
-        var descr = 'Prefix tree. Red boxes are word terminations. Highlighting the word "' + highlightWord + '".';
         var msgs = [testTrie.toString()];
         return (
                 <div className={classNames('s-component', 'trie1-component')}>
-                    <h1 className="title">{title}</h1>
-                    <div className="description">{descr}</div>
+                    <h1 className="title">{componentTitle}</h1>
+                    <div className="description">{componentDescription + ' Highlighting the word "' + highlightWord + '".'}</div>
                     <TrieView trie={testTrie} highlightWord={highlightWord} />
                     <LogOutput initialMessages={msgs} />
                 <BackLinkComponent />
@@ -58,4 +58,9 @@ var Trie1Component = React.createClass({
     }
 });
 
-module.exports = Trie1Component;
+module.exports = {
+    component: Trie1Component,
+    key: 'trie1',
+    title: componentTitle,
+    descr: componentDescription
+};

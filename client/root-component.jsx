@@ -9,12 +9,13 @@ var RootComponent = React.createClass({
     render: function() {
         var title = 'Skinny web app.';
         var linkNodes = routeMap.map(function(routeInfo, i) {
-            var routeStr = '/s/' + routeInfo.name;
+            var routeStr = '/s/' + routeInfo.key;
             return (
                 <li key={uuid.v1()}>
                     <Link to={routeStr}>{routeStr}</Link>
                 </li>
             )
+            // TODO: add more stuff from the routeInfo here, like title, descr, and status (once we add that)
         });
         return (
             <div className={classNames('s-component')}>

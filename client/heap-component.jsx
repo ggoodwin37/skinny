@@ -7,6 +7,8 @@ var LogOutput = require('./log-output-component.jsx');
 var randomArray = require('./random-array');
 var heapDataStruct = require('./heap-data-struct');
 
+const componentTitle = 'Heap struct/heap sort.';
+const componentDescription = 'O(n log n) for sorting.';
 var HeapComponent = React.createClass({
     testHeap: function() {
         var heap = new heapDataStruct(randomArray(300));
@@ -29,13 +31,11 @@ var HeapComponent = React.createClass({
         return msgs;
     },
     render: function() {
-        var title = 'Heap struct/heap sort.';
-        var descr = 'O(n log n) for sorting.';
         var initialLogMessages = this.testHeap();
         return (
                 <div className={classNames('s-component')}>
-                    <h1 className="title">{title}</h1>
-                    <div className="description">{descr}</div>
+                    <h1 className="title">{componentTitle}</h1>
+                    <div className="description">{componentDescription}</div>
                     <LogOutput initialMessages={initialLogMessages} ref={(loggerRef) => { this.logger = loggerRef }} />
                     <BackLinkComponent />
                 </div>
@@ -43,4 +43,9 @@ var HeapComponent = React.createClass({
     }
 });
 
-module.exports = HeapComponent;
+module.exports = {
+    component: HeapComponent,
+    key: 'heap',
+    title: componentTitle,
+    descr: componentDescription
+};

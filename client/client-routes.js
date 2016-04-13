@@ -14,7 +14,7 @@ var noMatchComponent = require('./no-match-component.jsx');
 function setupClientRoutes() {
     var routes = routeMap.map(function(routeInfo) {
         return React.createElement(Route, {
-            path: '/s/' + routeInfo.name,
+            path: '/s/' + routeInfo.key,
             component: routeInfo.component
         });
     });
