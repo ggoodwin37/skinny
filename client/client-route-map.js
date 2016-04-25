@@ -8,6 +8,7 @@ var routeMap = [
     require('./trie1-component.jsx'),
     require('./hanoi-component.jsx'),
     require('./heap-component.jsx'),
+    require('./prim-component.jsx'),
 ];
 
 module.exports = routeMap;
