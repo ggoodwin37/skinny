@@ -3,31 +3,38 @@ function getNextId() {
     return '' + nextId++;
 }
 
-function vert() {
-    this.id = getNextId();
+function vert(id) {
+    // note on vert ids: these are not unique across all vert instances
+    // because we can copy verts by id when making related graphs.
+    this.id = id || getNextId();
     this.edges = [];
 }
 vert.prototype.addEdge = function(edge) {
     this.edges.push(edge);
 }
 
-function edge(a, b, weight) {
-    this.id = getNextId();
-    this.verts = [a, b];
+// edges refer to verts by id
+function edge(idA, idB, weight) {
+    this.vertIds = [idA, idB];
     this.weight = weight;
 }
-edge.prototype.otherVert = function(thisVert) {
-    if (this.verts[0] === thisVert) return this.verts[1];
-    if (this.verts[1] === thisVert) return this.verts[0];
+edge.prototype.otherVertId = function(thisVertId) {
+    if (this.vertIds[0] === thisVertId) return this.vertIds[1];
+    if (this.vertIds[1] === thisVertId) return this.vertIds[0];
     console.error('bad vert');
     return null;
 }
 
 function weightedGraph() {
     this.verts = [];
+    this.vertCache = {};
 }
 weightedGraph.prototype.addVert = function(vert) {
     this.verts.push(vert);
+    this.vertCache[vert.id] = vert;
+}
+weightedGraph.prototype.getVertById = function(id) {
+    return this.vertCache[id];
 }
 weightedGraph.prototype.randomWeightGrid = function(width, height) {
     var i, j, offs, v1, v2, newEdge, weight;
@@ -42,7 +49,7 @@ weightedGraph.prototype.randomWeightGrid = function(width, height) {
             v1 = this.verts[(j * width) + i];
             v2 = this.verts[(j * width) + i + 1];
             weight = Math.random();
-            newEdge = new edge(v1, v2, weight);
+            newEdge = new edge(v1.id, v2.id, weight);
             v1.addEdge(newEdge);
             v2.addEdge(newEdge);
         }
@@ -53,7 +60,7 @@ weightedGraph.prototype.randomWeightGrid = function(width, height) {
             v1 = this.verts[(j * width) + i];
             v2 = this.verts[((j + 1) * width) + i];
             weight = Math.random();
-            newEdge = new edge(v1, v2, weight);
+            newEdge = new edge(v1.id, v2.id, weight);
             v1.addEdge(newEdge);
             v2.addEdge(newEdge);
         }
@@ -61,40 +68,48 @@ weightedGraph.prototype.randomWeightGrid = function(width, height) {
 }
 // return a new graph representing the minimal spanning tree of this graph, using Prim's algorithm.
 weightedGraph.prototype.prim = function() {
-    // key: vertex id
-    // value, {c: cheapest connection, if known, e: edge corresponding to cheapest connection, or null if no connection yet to this vertex}
-    // also, remember the lowest-cost edge overall and use that as starting point.
-    var costMap = {}, lowestWeight = null, lowestVert;
-    this.verts.forEach(function(thisVert) {
-        costMap[thisVert.id] = {
-            c: null,
-            e: null,
-        };
-        thisVert.edges.forEach(function(thisEdge) {
-            if (lowestVal === null || lowestVal > thisEdge.weight) {
-                lowestWeight = thisEdge.weight;
-                lowestVert = thisEdge.verts[0];  // just pick one
-            }
+    function initCostMap(verts) {
+        // key: vertex id
+        // value, {c: cheapest connection, if known, e: edge corresponding to cheapest connection, or null if no connection yet to this vertex}
+        var costMap = {};
+        verts.forEach(function(thisVert) {
+            costMap[thisVert.id] = {
+                c: null,
+                e: null,
+            };
         });
-    });
-    console.assert(lowestVert);
-
-    // a new graph representing the minimal spanning tree of this graph.
-    var prim = new weightedGraph();
-
+        return costMap;
+    }
+    function getNextVertId(verts, costMap) {
+        var lowestWeight = null, lowestVertId;
+        verts.forEach(function(thisVert) {
+            costMap[thisVert.id] = {
+                c: null,
+                e: null,
+            };
+            thisVert.edges.forEach(function(thisEdge) {
+                if (lowestWeight === null || lowestWeight > thisEdge.weight) {
+                    lowestWeight = thisEdge.weight;
+                    lowestVertId = thisEdge.vertIds[0];  // just pick one
+                }
+            });
+        });
+        return lowestVertId;
+    }
     function doNext(currentVert, result, costMap) {
         var oldVertData = costMap[currentVert.id];
         console.assert(oldVertData);
         delete costMap[currentVert.id];
 
-        var newVert = new vert();
+        // copy the existing vert along with the lowest-cost edge.
+        var newVert = new vert(currentVert.id);
         if (oldVertData.e) {
             newVert.addEdge(oldVertData.e);
         }
         result.addVert(newVert);
 
         currentVert.edges.forEach(function(thisEdge) {
-            var otherCostData = costMap[thisEdge.otherVert(currentVert)];
+            var otherCostData = costMap[thisEdge.otherVertId(currentVert.id)];
             if (otherCostData) {
                 if (otherCostData.c === null || otherCostData.c > thisEdge.weight) {
                     otherCostData.c = thisEdge.weight;
@@ -103,6 +118,20 @@ weightedGraph.prototype.prim = function() {
             }
         });
     }
+
+    // TODO: make this asynchronous
+    // a new graph representing the minimal spanning tree of this graph.
+    var result = new weightedGraph();
+    // represents vertices available to be added to the mst
+    var costMap = initCostMap(this.verts);
+    // the id of the vert currently being added
+    var currentVertId = getNextVertId(this.verts, costMap);
+    while (currentVertId) {
+        var currentVert = this.getVertById(currentVertId);
+        doNext(currentVert, result, costMap);
+        currentVertId = getNextVertId(this.verts, costMap);
+    }
+    return result;
 }
 
 module.exports = weightedGraph;
