@@ -11,10 +11,10 @@ const componentDescription = 'Build a minimal spanning tree using Prim\'s algo.'
 var PrimComponent = React.createClass({
     render: function() {
         var testGraph = new weightedGraph();
-        testGraph.randomWeightGrid(2, 2);
-        // TODO: debug, this is hanging XD
-        debugger;
+        testGraph.randomWeightGrid(3, 3);
         var prim = testGraph.prim();
+        console.log('orig', testGraph);
+        console.log('prim', prim);
         return (
                 <div><h1>TODO</h1><BackLinkComponent /></div>
         );

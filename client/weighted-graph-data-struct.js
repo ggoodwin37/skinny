@@ -81,30 +81,32 @@ weightedGraph.prototype.prim = function() {
         return costMap;
     }
     function getNextVertId(verts, costMap) {
-        var lowestWeight = null, lowestVertId;
+        var lowestWeight = null, lowestVertId = null, lowestVertIdCandidate;
         verts.forEach(function(thisVert) {
-            costMap[thisVert.id] = {
-                c: null,
-                e: null,
-            };
             thisVert.edges.forEach(function(thisEdge) {
                 if (lowestWeight === null || lowestWeight > thisEdge.weight) {
-                    lowestWeight = thisEdge.weight;
-                    lowestVertId = thisEdge.vertIds[0];  // just pick one
+                    lowestVertIdCandidate = thisEdge.otherVertId(thisVert.id);
+                    if (costMap[lowestVertIdCandidate]) {
+                        lowestWeight = thisEdge.weight;
+                        lowestVertId = lowestVertIdCandidate;
+                    }
                 }
             });
         });
         return lowestVertId;
     }
-    function doNext(currentVert, result, costMap) {
-        var oldVertData = costMap[currentVert.id];
-        console.assert(oldVertData);
+    function doNext(currentVert, result, costMap, edgeList) {
+        var currentCostData = costMap[currentVert.id];
+        if (!currentCostData) {
+            console.error('Unexpected: missing costData for currentVert.');
+            return;
+        }
         delete costMap[currentVert.id];
 
         // copy the existing vert along with the lowest-cost edge.
         var newVert = new vert(currentVert.id);
-        if (oldVertData.e) {
-            newVert.addEdge(oldVertData.e);
+        if (currentCostData.e) {
+            edgeList.push(currentCostData.e);
         }
         result.addVert(newVert);
 
@@ -126,11 +128,18 @@ weightedGraph.prototype.prim = function() {
     var costMap = initCostMap(this.verts);
     // the id of the vert currently being added
     var currentVertId = getNextVertId(this.verts, costMap);
+    // list of edges to add to result
+    var edgeList = [];
     while (currentVertId) {
         var currentVert = this.getVertById(currentVertId);
-        doNext(currentVert, result, costMap);
+        doNext(currentVert, result, costMap, edgeList);
         currentVertId = getNextVertId(this.verts, costMap);
     }
+    // add all optimal edges we collected during the above iteration.
+    edgeList.forEach(function(thisEdge) {
+        result.getVertById(thisEdge.vertIds[0]).addEdge(thisEdge);
+        result.getVertById(thisEdge.vertIds[1]).addEdge(thisEdge);
+    });
     return result;
 }
 
