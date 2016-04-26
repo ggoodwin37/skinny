@@ -12,7 +12,6 @@ var PrimComponent = React.createClass({
     render: function() {
         var testGraph = new weightedGraph();
         testGraph.randomWeightGrid(2, 2);
-        debugger;
         return (
                 <div><h1>TODO</h1><BackLinkComponent /></div>
         );

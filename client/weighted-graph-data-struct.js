@@ -1,6 +1,6 @@
 var nextId = 256;
 function getNextId() {
-    return nextId++;
+    return '' + nextId++;
 }
 
 function vert() {
@@ -25,6 +25,9 @@ edge.prototype.otherVert = function(thisVert) {
 
 function weightedGraph() {
     this.verts = [];
+}
+weightedGraph.prototype.addVert = function(vert) {
+    this.verts.push(vert);
 }
 weightedGraph.prototype.randomWeightGrid = function(width, height) {
     var i, j, offs, v1, v2, newEdge, weight;
@@ -56,12 +59,50 @@ weightedGraph.prototype.randomWeightGrid = function(width, height) {
         }
     }
 }
-weightedGraph.prototype.addVert = function(vert) {
-    this.verts.push(vert);
-}
 // return a new graph representing the minimal spanning tree of this graph, using Prim's algorithm.
 weightedGraph.prototype.prim = function() {
-    // LOL TODO
+    // key: vertex id
+    // value, {c: cheapest connection, if known, e: edge corresponding to cheapest connection, or null if no connection yet to this vertex}
+    // also, remember the lowest-cost edge overall and use that as starting point.
+    var costMap = {}, lowestWeight = null, lowestVert;
+    this.verts.forEach(function(thisVert) {
+        costMap[thisVert.id] = {
+            c: null,
+            e: null,
+        };
+        thisVert.edges.forEach(function(thisEdge) {
+            if (lowestVal === null || lowestVal > thisEdge.weight) {
+                lowestWeight = thisEdge.weight;
+                lowestVert = thisEdge.verts[0];  // just pick one
+            }
+        });
+    });
+    console.assert(lowestVert);
+
+    // a new graph representing the minimal spanning tree of this graph.
+    var prim = new weightedGraph();
+
+    function doNext(currentVert, result, costMap) {
+        var oldVertData = costMap[currentVert.id];
+        console.assert(oldVertData);
+        delete costMap[currentVert.id];
+
+        var newVert = new vert();
+        if (oldVertData.e) {
+            newVert.addEdge(oldVertData.e);
+        }
+        result.addVert(newVert);
+
+        currentVert.edges.forEach(function(thisEdge) {
+            var otherCostData = costMap[thisEdge.otherVert(currentVert)];
+            if (otherCostData) {
+                if (otherCostData.c === null || otherCostData.c > thisEdge.weight) {
+                    otherCostData.c = thisEdge.weight;
+                    otherCostData.e = thisEdge;
+                }
+            }
+        });
+    }
 }
 
 module.exports = weightedGraph;
