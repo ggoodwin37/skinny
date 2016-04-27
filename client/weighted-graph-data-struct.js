@@ -68,51 +68,54 @@ weightedGraph.prototype.randomWeightGrid = function(width, height) {
 }
 // return a new graph representing the minimal spanning tree of this graph, using Prim's algorithm.
 weightedGraph.prototype.prim = function() {
+    function initQ(verts) {
+        return verts.reduce(function(map, vert) {
+            map[vert.id] = true;
+            return map;
+        }, {});
+    }
     function initCostMap(verts) {
         // key: vertex id
         // value, {c: cheapest connection, if known, e: edge corresponding to cheapest connection, or null if no connection yet to this vertex}
-        var costMap = {};
-        verts.forEach(function(thisVert) {
-            costMap[thisVert.id] = {
+        return verts.reduce(function(map, vert) {
+            map[vert.id] = {
                 c: null,
-                e: null,
+                e: null
             };
-        });
-        return costMap;
+            return map;
+        }, {});
     }
-    function getNextVertId(verts, costMap) {
+    function pullNextVertId(verts, costMap, q) {
         var lowestWeight = null, lowestVertId = null, lowestVertIdCandidate;
         verts.forEach(function(thisVert) {
             thisVert.edges.forEach(function(thisEdge) {
                 if (lowestWeight === null || lowestWeight > thisEdge.weight) {
                     lowestVertIdCandidate = thisEdge.otherVertId(thisVert.id);
-                    if (costMap[lowestVertIdCandidate]) {
+                    if (q[lowestVertIdCandidate]) {
                         lowestWeight = thisEdge.weight;
                         lowestVertId = lowestVertIdCandidate;
                     }
                 }
             });
         });
+        if (lowestVertId) {
+            delete q[lowestVertId];
+        }
         return lowestVertId;
     }
-    function doNext(currentVert, result, costMap, edgeList) {
-        var currentCostData = costMap[currentVert.id];
-        if (!currentCostData) {
-            console.error('Unexpected: missing costData for currentVert.');
-            return;
-        }
-        delete costMap[currentVert.id];
-
+    function doNext(currentVert, result, costMap, edgeList, q) {
         // copy the existing vert along with the lowest-cost edge.
         var newVert = new vert(currentVert.id);
+        const currentCostData = costMap[currentVert.id];
         if (currentCostData.e) {
             edgeList.push(currentCostData.e);
         }
         result.addVert(newVert);
 
         currentVert.edges.forEach(function(thisEdge) {
-            var otherCostData = costMap[thisEdge.otherVertId(currentVert.id)];
-            if (otherCostData) {
+            const otherId = thisEdge.otherVertId(currentVert.id);
+            if (q[otherId]) {
+                const otherCostData = costMap[otherId];
                 if (otherCostData.c === null || otherCostData.c > thisEdge.weight) {
                     otherCostData.c = thisEdge.weight;
                     otherCostData.e = thisEdge;
@@ -124,16 +127,18 @@ weightedGraph.prototype.prim = function() {
     // TODO: make this asynchronous
     // a new graph representing the minimal spanning tree of this graph.
     var result = new weightedGraph();
+    // the set of available verts
+    var q = initQ(this.verts);
     // represents vertices available to be added to the mst
     var costMap = initCostMap(this.verts);
     // the id of the vert currently being added
-    var currentVertId = getNextVertId(this.verts, costMap);
+    var currentVertId = pullNextVertId(this.verts, costMap, q);
     // list of edges to add to result
     var edgeList = [];
     while (currentVertId) {
         var currentVert = this.getVertById(currentVertId);
-        doNext(currentVert, result, costMap, edgeList);
-        currentVertId = getNextVertId(this.verts, costMap);
+        doNext(currentVert, result, costMap, edgeList, q);
+        currentVertId = pullNextVertId(this.verts, costMap, q);
     }
     // add all optimal edges we collected during the above iteration.
     edgeList.forEach(function(thisEdge) {

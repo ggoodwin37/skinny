@@ -64,28 +64,24 @@ var MazeView = React.createClass({
             }
         }
         // make a second pass and determine if we're open or closed in each dir
-        var thisPos, testPos, thisWallInfo, result = {};
-        vertOffs = 0;
-        for (j = 0; j < height; ++j) {
-            for (i = 0; i < width; ++i) {
-                thisWallInfo = {
-                    closedUp: true,
-                    closedDown: true,
-                    closedLeft: true,
-                    closedRight: true
-                };
-                thisVert = graph.verts[vertOffs++];
-                thisPos = posMap[thisVert.id];
-                thisVert.edges.forEach(function(thisEdge) {
-                    testPos = posMap[thisEdge.otherVertId(thisVert.id)];
-                    if (testPos.x < thisPos.x) thisWallInfo.closedLeft = false;
-                    if (testPos.y < thisPos.y) thisWallInfo.closedUp = false;
-                    if (testPos.x > thisPos.x) thisWallInfo.closedRight = false;
-                    if (testPos.y < thisPos.y) thisWallInfo.closedDown = false;
-                });
-                result[thisVert.id] = thisWallInfo;
-            }
-        }
+        var result = {};
+        graph.verts.forEach(function(thisVert) {
+            var thisWallInfo = {
+                closedUp: true,
+                closedDown: true,
+                closedLeft: true,
+                closedRight: true
+            };
+            var thisPos = posMap[thisVert.id];
+            thisVert.edges.forEach(function(thisEdge) {
+                var testPos = posMap[thisEdge.otherVertId(thisVert.id)];
+                if (testPos.x < thisPos.x) thisWallInfo.closedLeft = false;
+                if (testPos.y < thisPos.y) thisWallInfo.closedUp = false;
+                if (testPos.x > thisPos.x) thisWallInfo.closedRight = false;
+                if (testPos.y < thisPos.y) thisWallInfo.closedDown = false;
+            });
+            result[thisVert.id] = thisWallInfo;
+        });
         return result;
     }
 });
