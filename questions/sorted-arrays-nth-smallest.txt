@@ -1,0 +1,1 @@
+You have 2 sorted arrays of length L and you want to find the Nth smallest number from the entire set of numbers. Do it in log N

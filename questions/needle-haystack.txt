@@ -1,0 +1,2 @@
+Write a program that finds all occurences of a given pattern in a given input string. This is often referred to as finding a needle in a haystack. The program has to detect all occurences of the needle in the haystack. 
+Hint: Boyer Moore, Rabin Karp, and Knuth Morris Pratt algos
