@@ -45,7 +45,7 @@ var MazeView = React.createClass({
         }
         return (
                 <div className={classNames('maze-view')} key={thisKey}>
-                    {thisRowNodes}
+                    {rows}
                 </div>
         );
     },
