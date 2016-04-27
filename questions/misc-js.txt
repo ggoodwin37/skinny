@@ -1,0 +1,5 @@
+- implement basic promise functionality
+- play with prototypal inheritance. super?
+- refresher on no-jquery dom manipulation
+- event bubble
+- etc
