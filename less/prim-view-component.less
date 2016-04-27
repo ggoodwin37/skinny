@@ -13,13 +13,14 @@
         align-items: flex-start;
     }
     .maze-node {
-        @box-size: 64px;
-        @border-width: 4px;
+        @box-size: 8px;
+        @border-width: 2px;
         @border-color: black;
+        @box-color: transparent;
         width: @box-size;
         height: @box-size;
         border: @border-width solid transparent;
-        background-color: #888;
+        background-color: @box-color;
         &.closed-up {
             border-top-color: @border-color;
         }
