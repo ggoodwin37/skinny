@@ -79,24 +79,23 @@ weightedGraph.prototype.prim = function() {
         // value, {c: cheapest connection, if known, e: edge corresponding to cheapest connection, or null if no connection yet to this vertex}
         return verts.reduce(function(map, vert) {
             map[vert.id] = {
-                c: null,
+                c: 1, // assuming our weights are [0,1]
                 e: null
             };
             return map;
         }, {});
     }
     function pullNextVertId(verts, costMap, q) {
-        var lowestWeight = null, lowestVertId = null, lowestVertIdCandidate;
+        var lowestWeight = null, lowestVertId = null;
         verts.forEach(function(thisVert) {
-            thisVert.edges.forEach(function(thisEdge) {
-                if (lowestWeight === null || lowestWeight > thisEdge.weight) {
-                    lowestVertIdCandidate = thisEdge.otherVertId(thisVert.id);
-                    if (q[lowestVertIdCandidate]) {
-                        lowestWeight = thisEdge.weight;
-                        lowestVertId = lowestVertIdCandidate;
-                    }
-                }
-            });
+            if (!q[thisVert.id]) {
+                return;
+            }
+            const thisCostInfo = costMap[thisVert.id];
+            if (lowestWeight === null || thisCostInfo.c < lowestWeight) {
+                lowestWeight = thisCostInfo.c;
+                lowestVertId = thisVert.id;
+            }
         });
         if (lowestVertId) {
             delete q[lowestVertId];
@@ -107,16 +106,18 @@ weightedGraph.prototype.prim = function() {
         // copy the existing vert along with the lowest-cost edge.
         var newVert = new vert(currentVert.id);
         const currentCostData = costMap[currentVert.id];
-        if (currentCostData.e) {
-            edgeList.push(currentCostData.e);
-        }
         result.addVert(newVert);
+        if (currentCostData.e) {
+            newVert.addEdge(currentCostData.e);
+            //            edgeList.push(currentCostData.e);
+            // TODO: pick up here? /shrug
+        }
 
         currentVert.edges.forEach(function(thisEdge) {
             const otherId = thisEdge.otherVertId(currentVert.id);
             if (q[otherId]) {
                 const otherCostData = costMap[otherId];
-                if (otherCostData.c === null || otherCostData.c > thisEdge.weight) {
+                if (otherCostData.c > thisEdge.weight) {
                     otherCostData.c = thisEdge.weight;
                     otherCostData.e = thisEdge;
                 }
@@ -129,7 +130,7 @@ weightedGraph.prototype.prim = function() {
     var result = new weightedGraph();
     // the set of available verts
     var q = initQ(this.verts);
-    // represents vertices available to be added to the mst
+    // lowest-cost-edge data generated as we go
     var costMap = initCostMap(this.verts);
     // the id of the vert currently being added
     var currentVertId = pullNextVertId(this.verts, costMap, q);
