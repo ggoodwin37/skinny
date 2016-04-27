@@ -78,7 +78,7 @@ var MazeView = React.createClass({
                 if (testPos.x < thisPos.x) thisWallInfo.closedLeft = false;
                 if (testPos.y < thisPos.y) thisWallInfo.closedUp = false;
                 if (testPos.x > thisPos.x) thisWallInfo.closedRight = false;
-                if (testPos.y < thisPos.y) thisWallInfo.closedDown = false;
+                if (testPos.y > thisPos.y) thisWallInfo.closedDown = false;
             });
             result[thisVert.id] = thisWallInfo;
         });
