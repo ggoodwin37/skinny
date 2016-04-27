@@ -11,8 +11,7 @@ const componentTitle = 'Prim.';
 const componentDescription = 'Build a minimal spanning tree using Prim\'s algo.';
 var PrimComponent = React.createClass({
     render: function() {
-        const width = 32, height = 32;
-        // const width = 2, height = 2;
+        const width = 250, height = 100;
         var testGraph = new weightedGraph();
         testGraph.randomWeightGrid(width, height);
         var prim = testGraph.prim();

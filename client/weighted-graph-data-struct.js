@@ -29,6 +29,15 @@ function weightedGraph() {
     this.verts = [];
     this.vertCache = {};
 }
+weightedGraph.prototype.sortVerts = function() {
+    // in general we don't care about the order of vertices in our list.
+    // but for ease of visualization of grid graphs, it's useful to have the verts in order.
+    // a more robust approach would be to store layout info with the vert, rather than
+    // inferring layout from the vert's index
+    this.verts.sort(function(a, b) {
+        return parseInt(a.id) - parseInt(b.id);
+    });
+}
 weightedGraph.prototype.addVert = function(vert) {
     this.verts.push(vert);
     this.vertCache[vert.id] = vert;
@@ -108,9 +117,7 @@ weightedGraph.prototype.prim = function() {
         const currentCostData = costMap[currentVert.id];
         result.addVert(newVert);
         if (currentCostData.e) {
-            newVert.addEdge(currentCostData.e);
-            //            edgeList.push(currentCostData.e);
-            // TODO: pick up here? /shrug
+            edgeList.push(currentCostData.e);
         }
 
         currentVert.edges.forEach(function(thisEdge) {
@@ -146,6 +153,7 @@ weightedGraph.prototype.prim = function() {
         result.getVertById(thisEdge.vertIds[0]).addEdge(thisEdge);
         result.getVertById(thisEdge.vertIds[1]).addEdge(thisEdge);
     });
+    result.sortVerts();
     return result;
 }
 
