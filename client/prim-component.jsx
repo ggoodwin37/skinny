@@ -3,6 +3,7 @@ var classNames = require('classnames');
 
 var LogOutput = require('./log-output-component.jsx');
 var BackLinkComponent = require('./back-link-component.jsx');
+var MazeViewComponent = require('./maze-graph-view.jsx');
 
 var weightedGraph = require('./weighted-graph-data-struct');
 
@@ -10,13 +11,17 @@ const componentTitle = 'Prim.';
 const componentDescription = 'Build a minimal spanning tree using Prim\'s algo.';
 var PrimComponent = React.createClass({
     render: function() {
+        var width = 3, height = 3;
         var testGraph = new weightedGraph();
-        testGraph.randomWeightGrid(3, 3);
+        testGraph.randomWeightGrid(width, height);
         var prim = testGraph.prim();
-        console.log('orig', testGraph);
-        console.log('prim', prim);
         return (
-                <div><h1>TODO</h1><BackLinkComponent /></div>
+                <div className={classNames('s-component', 'prim-component')}>
+                    <h1 className="title">{componentTitle}</h1>
+                    <div className="description">{componentDescription}</div>
+                    <MazeViewComponent graph={prim} width={width} height={height} />
+                    <BackLinkComponent />
+                </div>
         );
     }
 });

@@ -9,10 +9,10 @@ var MazeNodeView = React.createClass({
         var nodeClassNames = classNames(
             'maze-node',
             {
-                'closed-up': this.props.closedUp,
-                'closed-down': this.props.closedDown,
-                'closed-left': this.props.closedLeft,
-                'closed-right': this.props.closedRight,
+                'closed-up': this.props.wallInfo.closedUp,
+                'closed-down': this.props.wallInfo.closedDown,
+                'closed-left': this.props.wallInfo.closedLeft,
+                'closed-right': this.props.wallInfo.closedRight,
             }
         );
         return (
@@ -24,16 +24,30 @@ var MazeNodeView = React.createClass({
 var MazeView = React.createClass({
     render: function() {
         var wallInfo = this.calcWallInfo(this.props.graph, this.props.width, this.props.height);
-        // var highlight = null;
-        // if (this.props.highlightWord) {
-        //     highlight = {
-        //         str: this.props.highlightWord,
-        //         offs: 0
-        //     }
-        // }
-        // return (
-        //         <TrieNodeView node={this.props.trie.root} highlight={highlight} />
-        // );
+        var thisRowNodes, rows = [], thisWallInfo, thisVert, thisKey;
+        var vertOffs = 0;
+        for (var j = 0; j < this.props.height; ++j) {
+            thisRowNodes = [];
+            for (var i = 0; i < this.props.width; ++i) {
+                thisVert = this.props.graph.verts[vertOffs++];
+                thisWallInfo = wallInfo[thisVert.id];
+                thisKey = 'maze-node-' + thisVert.id;
+                thisRowNodes.push(
+                        <MazeNodeView wallInfo={thisWallInfo} key={thisKey}/>
+                );
+            }
+            thisKey = 'maze-row-' + j;
+            rows.push(
+                    <div className={classNames('maze-view-row')} key={thisKey}>
+                        {thisRowNodes}
+                    </div>
+            );
+        }
+        return (
+                <div className={classNames('maze-view')} key={thisKey}>
+                    {thisRowNodes}
+                </div>
+        );
     },
     // return a map of node id to {closedUp, closedDown, closedLeft, closedRight} by analyzing edges and making assumptions about node order.
     calcWallInfo: function(graph, width, height) {

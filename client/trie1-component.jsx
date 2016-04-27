@@ -52,7 +52,7 @@ var Trie1Component = React.createClass({
                     <div className="description">{componentDescription + ' Highlighting the word "' + highlightWord + '".'}</div>
                     <TrieView trie={testTrie} highlightWord={highlightWord} />
                     <LogOutput initialMessages={msgs} />
-                <BackLinkComponent />
+                    <BackLinkComponent />
                 </div>
         );
     }
