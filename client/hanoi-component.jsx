@@ -63,15 +63,22 @@ var HanoiComponent = React.createClass({
         if (solveStates.length === 0) {
             return;
         }
-        var intervalId = window.setInterval(function() {
+        this.intervalId = window.setInterval(function() {
             const thisState = solveStates[iState++];
             this.setState({
                 stacks: thisState
             });
             if (iState === solveStates.length) {
-                window.clearInterval(intervalId);
+                window.clearInterval(this.intervalId);
+                this.intervalId = null;
             }
         }.bind(this), stepDelayMs);
+    },
+    componentWillUnmount: function() {
+        if (this.intervalId) {
+            window.clearInterval(this.intervalId);
+            this.intervalId = null;
+        }
     }
 });
 
