@@ -1,17 +1,13 @@
 ### skinny
 Client sandbox web app. Gulp build, lightweight server with Hapi, client uses React and less.
 
+[See here for problems and notes](questions/)
+
 ## TODOs
-- [ ] React basics: two dial widgets plus a sum widget (flux?)
-- [ ] Tree practice: applications, other representations (per muki)
-- [ ] console.performance?
-- [ ] brush up on xss, csrf, others? clickjacking?
-- [ ] minesweeper
 - [ ] Reading
   - [ ] http://research.google.com/pubs/DistributedSystemsandParallelComputing.html
   - [ ] https://projecteuler.net/archives
   - [ ] http://www.aosabook.org/en/distsys.html
-- [ ] All s-components should get basic functionality for free (title, descr, back link)
 - [ ] Ability to mark a certain component as done or todo so we can put unsolved problems in here.
 
 ## Bugs

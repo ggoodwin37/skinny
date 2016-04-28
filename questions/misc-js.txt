@@ -9,6 +9,7 @@ promise
   });
 
 - play with prototypal inheritance. super?
+- console.performance
 - refresher on no-jquery stuff
   - dom manipulation, css class manipulation
   - event handling, delegation
@@ -21,6 +22,7 @@ promise
   - animations quickie
   - pseudo selectors
   - positioning rules
+- es6 refresher
 - security refresher
   - xss
   - xsrf
