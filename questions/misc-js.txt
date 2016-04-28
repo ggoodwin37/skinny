@@ -1,5 +1,30 @@
 - implement basic promise functionality
+var promise = new promise();
+promise
+  .when(cb => {
+    doSomethingAsync(cb);
+  })
+  .then(cb => {
+    doSomethingElseAsync(cb);
+  });
+
 - play with prototypal inheritance. super?
-- refresher on no-jquery dom manipulation
+- console.performance
+- refresher on no-jquery stuff
+  - dom manipulation, css class manipulation
+  - event handling, delegation
+  - dom fragments
 - event bubble
-- etc
+- css refresher
+  - flexbox
+  - float
+  - layout scenarios
+  - animations quickie
+  - pseudo selectors
+  - positioning rules
+- es6 refresher
+- security refresher
+  - xss
+  - xsrf
+  - clickjacking
+  - etc
