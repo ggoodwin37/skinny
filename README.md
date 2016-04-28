@@ -1,7 +1,7 @@
 ### skinny
 Client sandbox web app. Gulp build, lightweight server with Hapi, client uses React and less.
 
-[See here for problems and notes](questions/)
+[See here for problems and notes](docs/)
 
 ## TODOs
 - [ ] Reading
