@@ -10,10 +10,23 @@ function startServerInstance(done) {
         inspect: inspect
     };
 
+    // when running under c9 environment, we need to pull these values from env.
+    // when running locally, fall back to config.
+    var port = process.env.PORT;
+    var host = process.env.IP;
+    if (!port) {
+        console.log('no port defined in env, using config instead.');
+        port = config.serverPort;
+    }
+    if (!host) {
+        console.log('no host defined in env, using config instead.');
+        host = config.serverHost;
+    }
+
     var server = new hapi.Server();
     server.connection({
-        host: config.serverHost,
-        port: config.serverPort
+        host: host,
+        port: port
     });
 
     var plugins = [
