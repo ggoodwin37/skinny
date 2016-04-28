@@ -10,3 +10,5 @@
   - interesting problems solved
   - preferred team workflow/tools/structure
   - dealing with adversity in workplace
+
+- host this repo on c9.io
