@@ -15,12 +15,13 @@ var MortyComponent = React.createClass({
         return result;
     },
     execute: function() {
-        const dict = this.createDictionary();
-        const testValues = ['4938532894754', '1234567'];
+        const testValues = ['4938532894754', '1234567', '231416151718192', '1234561', '0000000', '12341324567', '10111213456', '1011121345',
+                            '12342567', '1223425627', '1232425262', '615716583', '333444455'];
         var results = [];
         testValues.forEach(function(testValue) {
-            results.push(checkValue(testValue, dict));
-        });
+            // note: create a new dictionary each time because the algo consumes entries from the dict to satisfy uniqueness requirement.
+            results.push(checkValue(testValue, this.createDictionary()));
+        }.bind(this));
         return results;
     },
     render: function() {
@@ -102,7 +103,7 @@ function checkValue(val, dict) {
     if (checkValueRecurse(val, dict, result)) {
         return 'Number string ' + val + ' can be broken down as: ' + result.join(' ');
     } else {
-        return 'Number string ' + val + ' can\'t be broken down into 7 unique lotto numbers.';
+        return 'Number string ' + val + ' can\'t be broken down into ' + numNumbers + ' unique lotto numbers.';
     }
 }
 
