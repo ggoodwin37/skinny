@@ -1,1 +1,12 @@
 - breadth-first search, find a good sample problem
+- priority queue
+- consider adding a* to prim
+
+- come up with good discussion points
+  - biggest challenge faced
+  - best/worst designs seen
+  - performance talking points
+  - testing talking points
+  - interesting problems solved
+  - preferred team workflow/tools/structure
+  - dealing with adversity in workplace
