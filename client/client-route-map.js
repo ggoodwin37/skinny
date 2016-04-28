@@ -9,6 +9,7 @@ var routeMap = [
     require('./hanoi-component.jsx'),
     require('./heap-component.jsx'),
     require('./prim-component.jsx'),
+    require('./uncle-morty-component.jsx'),
 ];
 
 module.exports = routeMap;
