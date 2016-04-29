@@ -1,5 +1,6 @@
 // just doing some raw js practice up in here
 
+////////////////////////////////////////////////////////////////////////////////
 // really simple promise impl, no error support, not robust.
 function promise() {
     this.numCompleted = 0;
@@ -27,22 +28,7 @@ promise.prototype._onDone = function() {
     this.execThen && this.execThen();
 }
 
-function baseClass() {
-}
-baseClass.prototype.toString = function() {
-    return 'base';
-}
-
-function subClass() {
-}
-subClass.prototype = new baseClass();
-// TODO: override, and/or with super
-
-function setStatusText(str) {
-    const el = document.querySelector('.status');
-    el.innerText = str;
-}
-
+// some fake async work to test out promises
 function fakeWork1(cb) {
     window.setTimeout(() => {
         setStatusText('fakeWork1 done');
@@ -76,17 +62,49 @@ function testPromises(cb) {
     });
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// simple prototypal inheritance
+function baseThing() {
+}
+baseThing.prototype.createEl = function(isSpecial) {
+    const el = document.createElement('div')
+    el.className = this.getClassList(isSpecial).join(' ');
+    return el;
+}
+baseThing.prototype.getClassList = function(isSpecial) {
+    let classList = ['base-class'];
+    if (isSpecial) {
+        classList.push('special');
+    }
+    return classList;
+}
+
+subThing.prototype = new baseThing();
+function subThing() {
+}
+subThing.prototype.super_getClassList = subThing.prototype.getClassList;
+subThing.prototype.getClassList = function(isSpecial) {
+    return [
+        'sub-class'
+    ].concat(this.super_getClassList(isSpecial));
+}
+
+function setStatusText(str) {
+    const el = document.querySelector('.status');
+    el.innerText = str;
+}
+
 function testDomManipulation() {
     const parentEl = document.querySelector('.test-dom');
     for (let i = 0; i < 6; ++i) {
-        let thisEl = document.createElement('div');
+        let thisThing = new subThing();
+        let thisEl = thisThing.createEl(i === 3);
         thisEl.innerText = 'Test child ' + (i + 1);
-        if (i === 3) {
-            thisEl.className = 'special';
-        }
         parentEl.appendChild(thisEl);
     }
 }
+
+////////////////////////////////////////////////////////////////////////////////
 
 function main() {
     testPromises(() => {
