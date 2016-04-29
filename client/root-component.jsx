@@ -23,7 +23,7 @@ var RootComponent = React.createClass({
                 <ul>
                     {linkNodes}
                 </ul>
-                <a href="https://github.com/ggoodwin37/skinny">Check out the source on Github!</a>
+                <a className={classNames('source-link')} href="https://github.com/ggoodwin37/skinny">Source code</a>
             </div>
         )
     }

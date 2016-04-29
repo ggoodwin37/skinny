@@ -11,4 +11,4 @@
   - preferred team workflow/tools/structure
   - dealing with adversity in workplace
 
-- host this repo on c9.io
+- host repos somewhere. c9 sucks cuz it keeps killing ur shit.
