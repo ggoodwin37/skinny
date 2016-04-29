@@ -29,33 +29,22 @@ promise.prototype._onDone = function() {
 }
 
 // some fake async work to test out promises
-function fakeWork1(cb) {
+function fakeWork(num, cb) {
     window.setTimeout(() => {
-        setStatusText('fakeWork1 done');
+        setStatusText('fakeWork ' + num + ' done');
         cb();
-    }, 100);
-}
-function fakeWork2(cb) {
-    window.setTimeout(() => {
-        setStatusText('fakeWork2 done');
-        cb();
-    }, 200);
-}
-function fakeWork3(cb) {
-    window.setTimeout(() => {
-        cb();
-    }, 300);
+    }, num * 300);
 }
 
 function testPromises(cb) {
     setStatusText('Waiting for fake work to complete...');
     var pr = new promise();
     pr.when(cb => {
-        fakeWork1(cb);
+        fakeWork(1, cb);
     }, cb => {
-        fakeWork2(cb);
+        fakeWork(2, cb);
     }, cb => {
-        fakeWork3(cb);
+        fakeWork(3, cb);
     }).then(() => {
         setStatusText('Fake work is done!');
         cb();
@@ -106,8 +95,27 @@ function testDomManipulation() {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+// simple event test. delegate events up to the container and toggle classes on the target el
+function testEventShit() {
+    const containerEl = document.querySelector('.test-dom');
+    containerEl.addEventListener('click', ev => {
+        const targetEl = ev.target;
+        let classes = targetEl.className.split(' ');
+        const specialIndex = classes.indexOf('special');
+        if (specialIndex === -1) {
+            classes.push('special');
+        } else {
+            classes.splice(specialIndex, 1);
+        }
+        targetEl.className = classes.join(' ');
+    });
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 function main() {
     testPromises(() => {
         testDomManipulation();
+        testEventShit();
     });
 }
