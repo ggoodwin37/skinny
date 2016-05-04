@@ -10,6 +10,7 @@ var routeMap = [
     require('./heap-component.jsx'),
     require('./prim-component.jsx'),
     require('./uncle-morty-component.jsx'),
+    require('./astar-component.jsx'),
 ];
 
 module.exports = routeMap;
