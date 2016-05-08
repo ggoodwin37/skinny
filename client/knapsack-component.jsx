@@ -10,19 +10,21 @@ var KnapsackComponent = React.createClass({
     dataToString: function(data) {
         return data.map(data => { return '' + data.e + '(' + data.l + ')'; }).join(' ');
     },
-    testOne: function(input, maxL) {
-        var solution = [{e:2, l:2}]; // TODO
-        return 'Input: ' + this.dataToString(input) + ' max=' + maxL + ' ..... Output: ' + this.dataToString(solution);
+    testOneBruteForce: function(input, maxL) {
+        return 'Brute force output: ' + this.dataToString(solveBruteForce(input, maxL));
     },
     testAll: function() {
         const maxL = 10;
         const testCases = [
-            [{e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}],
-            [{e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}],
-            [{e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}],
+            [{e: 1, l: 3}, {e: 2, l: 3}, {e: 3, l: 3}, {e: 4, l: 3}, {e: 5, l: 3}, {e: 6, l: 3}],
+            [{e: 10, l: 10}, {e: 3, l: 2}, {e: 3, l: 2}, {e: 3, l: 2}, {e: 3, l: 2}, {e: 3, l: 2}],
+            [{e: 8, l: 2}, {e: 3, l: 5}, {e: 2, l: 6}, {e: 4, l: 3}, {e: 5, l: 2}, {e: 3, l: 3}],
         ];
-        const msgs = testCases.map(thisCase => {
-            return this.testOne(thisCase, maxL);
+        var msgs = [];
+        testCases.forEach(thisCase => {
+            msgs.push('Input: ' + this.dataToString(thisCase) + ' max=' + maxL);
+            msgs.push(this.testOneBruteForce(thisCase, maxL));
+            msgs.push('------');
         });
         return msgs;
     },
@@ -38,6 +40,46 @@ var KnapsackComponent = React.createClass({
         );
     }
 });
+
+// brute force approach: cover every possible combo
+function solveBruteForce(input, maxL) {
+    function isWithinLimit(combo) {
+        var sum = input.reduce((p, c, i) => {
+            if (!!(combo & (1 << i))) {
+                return p + c.l;
+            } else {
+                return p;
+            }
+        }, 0);
+        return sum <= maxL;
+    }
+    function calcScore(combo) {
+        return input.reduce((p, c, i) => {
+            if (!!(combo & (1 << i))) {
+                return p + c.e;
+            } else {
+                return p;
+            }
+        }, 0);
+    }
+    var bestScore = 0, bestCombo = null;;
+    const max = Math.pow(2, input.length);
+    for (var i = 0; i < max; ++i) {
+        if (isWithinLimit(i)) {
+            const score = calcScore(i);
+            if (score > bestScore) {
+                bestScore = score;
+                bestCombo = i;
+            }
+        }
+    }
+    if (bestCombo === null) {
+        return [];
+    }
+    return input.filter((el, index) => {
+        return !!(bestCombo & (1 << index));
+    });
+}
 
 module.exports = {
     component: KnapsackComponent,
