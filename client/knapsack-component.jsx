@@ -7,11 +7,23 @@ var LogOutput = require('./log-output-component.jsx');
 const componentTitle = 'Knapsack problem';
 const componentDescription = 'A variation of the knapsack problem, where we are trying to maximize E while not going over MAX_L.';
 var KnapsackComponent = React.createClass({
-    testOne: function(input) {
-        // TODO
+    dataToString: function(data) {
+        return data.map(data => { return '' + data.e + '(' + data.l + ')'; }).join(' ');
+    },
+    testOne: function(input, maxL) {
+        var solution = [{e:2, l:2}]; // TODO
+        return 'Input: ' + this.dataToString(input) + ' max=' + maxL + ' ..... Output: ' + this.dataToString(solution);
     },
     testAll: function() {
-        var msgs = ['TODO'];
+        const maxL = 10;
+        const testCases = [
+            [{e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}],
+            [{e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}],
+            [{e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}, {e: 1, l: 1}],
+        ];
+        const msgs = testCases.map(thisCase => {
+            return this.testOne(thisCase, maxL);
+        });
         return msgs;
     },
     render: function() {
