@@ -7,7 +7,7 @@ var MazeViewComponent = require('./maze-graph-view.jsx');
 
 var weightedGraph = require('./weighted-graph-data-struct');
 
-const componentTitle = 'A*';
+const componentTitle = 'A* (TODO later lol)';
 const componentDescription = 'Use A* pathfinding algorithm to solve a maze that we generated using the earlier Prim implementation.';
 var AstarComponent = React.createClass({
     render: function() {
