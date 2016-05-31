@@ -38,7 +38,7 @@ function fakeWork(num, cb) {
 
 function testPromises(cb) {
     setStatusText('Waiting for fake work to complete...');
-    var pr = new promise();
+    const pr = new promise();
     pr.when(cb => {
         fakeWork(1, cb);
     }, cb => {
@@ -61,7 +61,7 @@ baseThing.prototype.createEl = function(isSpecial) {
     return el;
 }
 baseThing.prototype.getClassList = function(isSpecial) {
-    let classList = ['base-class'];
+    const classList = ['base-class'];
     if (isSpecial) {
         classList.push('special');
     }
@@ -86,8 +86,8 @@ function setStatusText(str) {
 function testDomManipulation() {
     const parentEl = document.querySelector('.test-dom');
     for (let i = 0; i < 6; ++i) {
-        let thisThing = new subThing();
-        let thisEl = thisThing.createEl(i === 3);
+        const thisThing = new subThing();
+        const thisEl = thisThing.createEl(i === 3);
         thisEl.innerText = 'Test child ' + (i + 1);
         parentEl.appendChild(thisEl);
     }
@@ -100,7 +100,7 @@ function testEventShit() {
     const containerEl = document.querySelector('.test-dom');
     containerEl.addEventListener('click', ev => {
         const targetEl = ev.target;
-        let classes = targetEl.className.split(' ');
+        const classes = targetEl.className.split(' ');
         const specialIndex = classes.indexOf('special');
         if (specialIndex === -1) {
             classes.push('special');
