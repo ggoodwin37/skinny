@@ -19,20 +19,20 @@ var BoldMazeNodeView = React.createClass({
         // TODO: I think this markup is the only difference from the original version
         return (
                 <div className={nodeClassNames}>
-                    <div className="top-row-container">
-                        <div className="left-cell" />
-                        <div className="mid-cell" />
-                        <div className="right-cell" />
+                    <div className="top-row-container node-inner-row">
+                        <div className="left-cell node-cell" />
+                        <div className="mid-cell node-cell" />
+                        <div className="right-cell node-cell" />
                     </div>
-                    <div className="mid-row-container">
-                        <div className="left-cell" />
-                        <div className="mid-cell" />
-                        <div className="right-cell" />
+                    <div className="mid-row-container node-inner-row">
+                        <div className="left-cell node-cell" />
+                        <div className="mid-cell node-cell" />
+                        <div className="right-cell node-cell" />
                     </div>
-                    <div className="bottom-row-container">
-                        <div className="left-cell" />
-                        <div className="mid-cell" />
-                        <div className="right-cell" />
+                    <div className="bottom-row-container node-inner-row">
+                        <div className="left-cell node-cell" />
+                        <div className="mid-cell node-cell" />
+                        <div className="right-cell node-cell" />
                     </div>
                 </div>
         )

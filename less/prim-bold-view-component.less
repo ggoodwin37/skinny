@@ -16,6 +16,8 @@
     .maze-node {
         @half-border-thickness: 12px;
         @mid-thickness: 24px;
+        @open-color: white;
+        @closed-color: black;
         .top-row-container div, .bottom-row-container div {
             height: @half-border-thickness;
         }
@@ -27,19 +29,30 @@
         }
         .mid-cell {
             width: @mid-thickness;
-            background-color: purple;
         }
-        /* &.closed-up { */
-        /*     border-top-color: @border-color; */
-        /* } */
-        /* &.closed-down { */
-        /*     border-bottom-color: @border-color; */
-        /* } */
-        /* &.closed-left { */
-        /*     border-left-color: @border-color; */
-        /* } */
-        /* &.closed-right { */
-        /*     border-right-color: @border-color; */
-        /* } */
+        .node-cell {
+            display: inline-block;
+            height: 100%;
+            background-color: @open-color;
+        }
+        /* border colors. corners are always closed */
+        .top-row-container .left-cell, .top-row-container .right-cell {
+            background-color: @closed-color;
+        }
+        .bottom-row-container .left-cell, .bottom-row-container .right-cell {
+            background-color: @closed-color;
+        }
+        &.closed-up .top-row-container .mid-cell {
+            background-color: @closed-color;
+        }
+        &.closed-left .mid-row-container .left-cell {
+            background-color: @closed-color;
+        }
+        &.closed-right .mid-row-container .right-cell {
+            background-color: @closed-color;
+        }
+        &.closed-down .bottom-row-container .mid-cell {
+            background-color: @closed-color;
+        }
     }
 }
