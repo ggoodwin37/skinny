@@ -12,6 +12,7 @@ var routeMap = [
     require('./uncle-morty-component.jsx'),
     require('./astar-component.jsx'),
     require('./knapsack-component.jsx'),
+    require('./prim-bold-component.jsx'),
 ];
 
 module.exports = routeMap;

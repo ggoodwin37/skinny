@@ -1,0 +1,38 @@
+.prim-bold-component {
+    .maze-view {
+        margin: 8px;
+        width: 100%;
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+    }
+    .maze-view-row {
+        width: 100%;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: flex-start;
+    }
+    .maze-node {
+        @box-size: 21px;
+        @border-width: 2px;
+        @border-color: black;
+        @box-color: transparent;
+        width: @box-size;
+        height: @box-size;
+        border: @border-width solid transparent;
+        background-color: @box-color;
+        &.closed-up {
+            border-top-color: @border-color;
+        }
+        &.closed-down {
+            border-bottom-color: @border-color;
+        }
+        &.closed-left {
+            border-left-color: @border-color;
+        }
+        &.closed-right {
+            border-right-color: @border-color;
+        }
+    }
+}
