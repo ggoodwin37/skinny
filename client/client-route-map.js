@@ -8,11 +8,10 @@ var routeMap = [
     require('./trie1-component.jsx'),
     require('./hanoi-component.jsx'),
     require('./heap-component.jsx'),
-    require('./prim-component.jsx'),
+    require('./prim-bold-component.jsx'),
     require('./uncle-morty-component.jsx'),
     require('./astar-component.jsx'),
     require('./knapsack-component.jsx'),
-    require('./prim-bold-component.jsx'),
 ];
 
 module.exports = routeMap;
