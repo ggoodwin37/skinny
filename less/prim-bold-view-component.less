@@ -14,25 +14,32 @@
         align-items: flex-start;
     }
     .maze-node {
-        @box-size: 21px;
-        @border-width: 2px;
-        @border-color: black;
-        @box-color: transparent;
-        width: @box-size;
-        height: @box-size;
-        border: @border-width solid transparent;
-        background-color: @box-color;
-        &.closed-up {
-            border-top-color: @border-color;
+        @half-border-thickness: 12px;
+        @mid-thickness: 24px;
+        .top-row-container div, .bottom-row-container div {
+            height: @half-border-thickness;
         }
-        &.closed-down {
-            border-bottom-color: @border-color;
+        .mid-row-container div {
+            height: @mid-thickness;
         }
-        &.closed-left {
-            border-left-color: @border-color;
+        .left-cell, .right-cell {
+            width: @half-border-thickness;
         }
-        &.closed-right {
-            border-right-color: @border-color;
+        .mid-cell {
+            width: @mid-thickness;
+            background-color: purple;
         }
+        /* &.closed-up { */
+        /*     border-top-color: @border-color; */
+        /* } */
+        /* &.closed-down { */
+        /*     border-bottom-color: @border-color; */
+        /* } */
+        /* &.closed-left { */
+        /*     border-left-color: @border-color; */
+        /* } */
+        /* &.closed-right { */
+        /*     border-right-color: @border-color; */
+        /* } */
     }
 }

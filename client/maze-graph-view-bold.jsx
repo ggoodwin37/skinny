@@ -1,5 +1,6 @@
 /*
   The purpose of this component tree is to display nodes in a grid graph such that they look like a maze. This is combined with the prim algo to generate mazes from msts.
+  TODO: this was hastily copied from the original version. The wallInfo lagic and the main view are probably identical.
 */
 var React = require('react');
 var classNames = require('classnames');
@@ -15,8 +16,25 @@ var BoldMazeNodeView = React.createClass({
                 'closed-right': this.props.wallInfo.closedRight,
             }
         );
+        // TODO: I think this markup is the only difference from the original version
         return (
-                <div className={nodeClassNames} />
+                <div className={nodeClassNames}>
+                    <div className="top-row-container">
+                        <div className="left-cell" />
+                        <div className="mid-cell" />
+                        <div className="right-cell" />
+                    </div>
+                    <div className="mid-row-container">
+                        <div className="left-cell" />
+                        <div className="mid-cell" />
+                        <div className="right-cell" />
+                    </div>
+                    <div className="bottom-row-container">
+                        <div className="left-cell" />
+                        <div className="mid-cell" />
+                        <div className="right-cell" />
+                    </div>
+                </div>
         )
     }
 });
