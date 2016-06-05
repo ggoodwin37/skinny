@@ -97,6 +97,13 @@ var BoldMazeView = React.createClass({
                 if (testPos.y < thisPos.y) thisWallInfo.closedUp = false;
                 if (testPos.x > thisPos.x) thisWallInfo.closedRight = false;
                 if (testPos.y > thisPos.y) thisWallInfo.closedDown = false;
+                // special cases for bottom left and top right, to make the entrance/exit
+                if (thisPos.x === 0 && thisPos.y === height - 1) {
+                    thisWallInfo.closedLeft = false;
+                }
+                if (thisPos.x === width - 1 && thisPos.y === 0) {
+                    thisWallInfo.closedRight = false;
+                }
             });
             result[thisVert.id] = thisWallInfo;
         });
