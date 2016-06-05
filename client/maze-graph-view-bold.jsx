@@ -4,7 +4,7 @@
 var React = require('react');
 var classNames = require('classnames');
 
-var MazeNodeView = React.createClass({
+var BoldMazeNodeView = React.createClass({
     render: function() {
         var nodeClassNames = classNames(
             'maze-node',
@@ -16,12 +16,28 @@ var MazeNodeView = React.createClass({
             }
         );
         return (
-                <div className={nodeClassNames} />
+                <div className={nodeClassNames}>
+                    <div className="top-row-container node-inner-row">
+                        <div className="left-cell node-cell" />
+                        <div className="mid-cell node-cell" />
+                        <div className="right-cell node-cell" />
+                    </div>
+                    <div className="mid-row-container node-inner-row">
+                        <div className="left-cell node-cell" />
+                        <div className="mid-cell node-cell" />
+                        <div className="right-cell node-cell" />
+                    </div>
+                    <div className="bottom-row-container node-inner-row">
+                        <div className="left-cell node-cell" />
+                        <div className="mid-cell node-cell" />
+                        <div className="right-cell node-cell" />
+                    </div>
+                </div>
         )
     }
 });
 
-var MazeView = React.createClass({
+var BoldMazeView = React.createClass({
     render: function() {
         var wallInfo = this.calcWallInfo(this.props.graph, this.props.width, this.props.height);
         var thisRowNodes, rows = [], thisWallInfo, thisVert, thisKey;
@@ -33,7 +49,7 @@ var MazeView = React.createClass({
                 thisWallInfo = wallInfo[thisVert.id];
                 thisKey = 'maze-node-' + thisVert.id;
                 thisRowNodes.push(
-                        <MazeNodeView wallInfo={thisWallInfo} key={thisKey}/>
+                        <BoldMazeNodeView wallInfo={thisWallInfo} key={thisKey}/>
                 );
             }
             thisKey = 'maze-row-' + j;
@@ -79,6 +95,13 @@ var MazeView = React.createClass({
                 if (testPos.y < thisPos.y) thisWallInfo.closedUp = false;
                 if (testPos.x > thisPos.x) thisWallInfo.closedRight = false;
                 if (testPos.y > thisPos.y) thisWallInfo.closedDown = false;
+                // special cases for bottom left and top right, to make the entrance/exit
+                if (thisPos.x === 0 && thisPos.y === height - 1) {
+                    thisWallInfo.closedLeft = false;
+                }
+                if (thisPos.x === width - 1 && thisPos.y === 0) {
+                    thisWallInfo.closedRight = false;
+                }
             });
             result[thisVert.id] = thisWallInfo;
         });
@@ -86,4 +109,4 @@ var MazeView = React.createClass({
     }
 });
 
-module.exports = MazeView;
+module.exports = BoldMazeView;

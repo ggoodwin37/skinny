@@ -3,7 +3,7 @@ var classNames = require('classnames');
 
 var LogOutput = require('./log-output-component.jsx');
 var BackLinkComponent = require('./back-link-component.jsx');
-var MazeViewComponent = require('./maze-graph-view.jsx');
+var MazeViewComponent = require('./maze-graph-view-bold.jsx');
 
 var weightedGraph = require('./weighted-graph-data-struct');
 
@@ -16,7 +16,7 @@ var AstarComponent = React.createClass({
         testGraph.randomWeightGrid(width, height);
         var prim = testGraph.prim();
         return (
-                <div className={classNames('s-component', 'prim-component')}>
+                <div className={classNames('s-component', 'prim-bold-component')}>
                     <h1 className="title">{componentTitle}</h1>
                     <div className="description">{componentDescription}</div>
                     <MazeViewComponent graph={prim} width={width} height={height} />

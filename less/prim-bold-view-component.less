@@ -1,0 +1,78 @@
+.prim-bold-component {
+    @half-border-thickness: 6px;
+    @full-border-thickness: 12px;
+    @mid-thickness: 12px;
+    @open-color: white;
+    @closed-color: black;
+    .maze-view {
+        margin: 32px 8px;
+        width: 100%;
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+    }
+    .maze-view-row {
+        width: 100%;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: flex-start;
+    }
+    .maze-node {
+        .top-row-container div, .bottom-row-container div {
+            height: @half-border-thickness;
+        }
+        .mid-row-container div {
+            height: @mid-thickness;
+        }
+        .left-cell, .right-cell {
+            width: @half-border-thickness;
+        }
+        .mid-cell {
+            width: @mid-thickness;
+        }
+        .node-cell {
+            display: inline-block;
+            height: 100%;
+            background-color: @open-color;
+        }
+        /* border colors. corners are always closed */
+        .top-row-container .left-cell, .top-row-container .right-cell {
+            background-color: @closed-color;
+        }
+        .bottom-row-container .left-cell, .bottom-row-container .right-cell {
+            background-color: @closed-color;
+        }
+        &.closed-up .top-row-container .mid-cell {
+            background-color: @closed-color;
+        }
+        &.closed-left .mid-row-container .left-cell {
+            background-color: @closed-color;
+        }
+        &.closed-right .mid-row-container .right-cell {
+            background-color: @closed-color;
+        }
+        &.closed-down .bottom-row-container .mid-cell {
+            background-color: @closed-color;
+        }
+    }
+    /* apply some special styles to get full-width borders on the edges of the maze */
+    .maze-view-row:first-child {
+        .maze-node .top-row-container div {
+            height: @full-border-thickness;
+        }
+    }
+    .maze-view-row:last-child {
+        .maze-node .bottom-row-container div {
+            height: @full-border-thickness;
+        }
+    }
+    .maze-view-row {
+        .maze-node:first-child .left-cell {
+            width: @full-border-thickness;
+        }
+        .maze-node:last-child .right-cell {
+            width: @full-border-thickness;
+        }
+    }
+}
