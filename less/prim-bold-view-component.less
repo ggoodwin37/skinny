@@ -1,4 +1,9 @@
 .prim-bold-component {
+    @half-border-thickness: 12px;
+    @full-border-thickness: 24px;
+    @mid-thickness: 24px;
+    @open-color: white;
+    @closed-color: black;
     .maze-view {
         margin: 8px;
         width: 100%;
@@ -14,10 +19,6 @@
         align-items: flex-start;
     }
     .maze-node {
-        @half-border-thickness: 12px;
-        @mid-thickness: 24px;
-        @open-color: white;
-        @closed-color: black;
         .top-row-container div, .bottom-row-container div {
             height: @half-border-thickness;
         }
@@ -53,6 +54,25 @@
         }
         &.closed-down .bottom-row-container .mid-cell {
             background-color: @closed-color;
+        }
+    }
+    /* apply some special styles to get full-width borders on the edges of the maze */
+    .maze-view-row:first-child {
+        .maze-node .top-row-container div {
+            height: @full-border-thickness;
+        }
+    }
+    .maze-view-row:last-child {
+        .maze-node .bottom-row-container div {
+            height: @full-border-thickness;
+        }
+    }
+    .maze-view-row {
+        .maze-node:first-child .left-cell {
+            width: @full-border-thickness;
+        }
+        .maze-node:last-child .right-cell {
+            width: @full-border-thickness;
         }
     }
 }
