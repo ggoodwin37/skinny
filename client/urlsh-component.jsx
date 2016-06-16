@@ -22,15 +22,20 @@ var UrlshComponent = React.createClass({
                         <form onSubmit={onSubmit} >
                             <label>URL to shorten:</label>
                             <input type="text" id="url-input" ref={(urlInputRef) => { this.urlInputRef = urlInputRef }} />
-                            <input type="submit" text="Shorten" />
+                            <input type="submit" value="Shorten" />
                         </form>
+                        <div className="status" ref={(statusRef) => { this.statusRef = statusRef }} ></div>
                     </div>
                     <BackLinkComponent />
                 </div>
         );
     },
     postUrl: function(url) {
-        console.log('posting url: ' + url);
+        // TODO: make this slicker, probably have a new component render when we get the result, etc.
+        this.statusRef.innerText = "Waiting for API";
+        window.setTimeout(() => {
+            this.statusRef.innerText = "Result: " + url;  // TODO
+        }, 5000);
     },
 });
 
