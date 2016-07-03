@@ -10,6 +10,9 @@
     "type": "git",
     "url": "https://github.com/ggoodwin37/skinny"
   },
+  "engines" : {
+    "node" : ">=4"
+  },
   "author": "ggoodwin37",
   "license": "ISC",
   "dependencies": {

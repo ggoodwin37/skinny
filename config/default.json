@@ -1,5 +1,4 @@
 {
     "isDev": true,
-    "serverHost": "localhost",
     "serverPort": 8080
 }

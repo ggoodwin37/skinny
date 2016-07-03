@@ -1,35 +1,38 @@
-var hapi = require('hapi');
-var config = require('getconfig');
-var inspect = require('eyes').inspector({maxLength: null});
+'use strict';
+const hapi = require('hapi');
+const config = require('getconfig');
+const inspect = require('eyes').inspector({maxLength: null});
 
-var registerServerRoutes = require('./server-routes');
+const registerServerRoutes = require('./server-routes');
 
 function startServerInstance(done) {
-    var app = {
+    const app = {
         config: config,
         inspect: inspect
     };
 
-    // when running under c9 environment, we need to pull these values from env.
+    // when running under cloud environment (c9, gae), we need to pull port number from env.
     // when running locally, fall back to config.
-    var port = process.env.PORT;
-    var host = process.env.IP;
+    const serverOptions = {};
+    let port = process.env.PORT;
     if (!port) {
         console.log('no port defined in env, using config instead.');
         port = config.serverPort;
     }
-    if (!host) {
-        console.log('no host defined in env, using config instead.');
-        host = config.serverHost;
+    console.log(`using port ${port}`);
+    serverOptions['port'] = port;
+
+    let host = process.env.IP;
+    if (host) {
+        serverOptions['host'] = host;
+    } else {
+        console.log('no host defined in env, omitting from server options.');
     }
 
-    var server = new hapi.Server();
-    server.connection({
-        host: host,
-        port: port
-    });
+    const server = new hapi.Server();
+    server.connection(serverOptions);
 
-    var plugins = [
+    const plugins = [
         require('inert')
     ];
     server.register(plugins, function(err) {
